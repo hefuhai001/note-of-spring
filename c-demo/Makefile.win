@@ -1,0 +1,103 @@
+# Project: log
+# Makefile created by Embarcadero Dev-C++ 6.3
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = 01_hello.o 02_basic.o 03_data.o 00_remp.o 04_var.o 05_const.o 06_storageClass.o 07_operator.o 08_if.o 09_for.o 10_function.o 11_scope.o 12_array.o 13_enum.o 14_pointer.o 15_funcPointer.o 16_string.o 17_struct.o 18_union.o 19_bitField.o 20_typedef.o 21_scanf.o 22_file.o 23_preprocessor.o 24_include.o 25_expression.o
+LINKOBJ  = 01_hello.o 02_basic.o 03_data.o 00_remp.o 04_var.o 05_const.o 06_storageClass.o 07_operator.o 08_if.o 09_for.o 10_function.o 11_scope.o 12_array.o 13_enum.o 14_pointer.o 15_funcPointer.o 16_string.o 17_struct.o 18_union.o 19_bitField.o 20_typedef.o 21_scanf.o 22_file.o 23_preprocessor.o 24_include.o 25_expression.o
+LIBS     = -L"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
+CXXINCS  = -I"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"D:/Program Files/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
+BIN      = log.exe
+CXXFLAGS = $(CXXINCS) -fexec-charset=gbk
+CFLAGS   = $(INCS) -fexec-charset=gbk
+DEL      = D:\Program Files\Embarcadero\Dev-Cpp\DevCpp.exe INTERNAL_DEL
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${DEL} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+01_hello.o: 01_hello.c
+	$(CC) -c 01_hello.c -o 01_hello.o $(CFLAGS)
+
+02_basic.o: 02_basic.c
+	$(CC) -c 02_basic.c -o 02_basic.o $(CFLAGS)
+
+03_data.o: 03_data.c
+	$(CC) -c 03_data.c -o 03_data.o $(CFLAGS)
+
+00_remp.o: 00_remp.c
+	$(CC) -c 00_remp.c -o 00_remp.o $(CFLAGS)
+
+04_var.o: 04_var.c
+	$(CC) -c 04_var.c -o 04_var.o $(CFLAGS)
+
+05_const.o: 05_const.c
+	$(CC) -c 05_const.c -o 05_const.o $(CFLAGS)
+
+06_storageClass.o: 06_storageClass.c
+	$(CC) -c 06_storageClass.c -o 06_storageClass.o $(CFLAGS)
+
+07_operator.o: 07_operator.c
+	$(CC) -c 07_operator.c -o 07_operator.o $(CFLAGS)
+
+08_if.o: 08_if.c
+	$(CC) -c 08_if.c -o 08_if.o $(CFLAGS)
+
+09_for.o: 09_for.c
+	$(CC) -c 09_for.c -o 09_for.o $(CFLAGS)
+
+10_function.o: 10_function.c
+	$(CC) -c 10_function.c -o 10_function.o $(CFLAGS)
+
+11_scope.o: 11_scope.c
+	$(CC) -c 11_scope.c -o 11_scope.o $(CFLAGS)
+
+12_array.o: 12_array.c
+	$(CC) -c 12_array.c -o 12_array.o $(CFLAGS)
+
+13_enum.o: 13_enum.c
+	$(CC) -c 13_enum.c -o 13_enum.o $(CFLAGS)
+
+14_pointer.o: 14_pointer.c
+	$(CC) -c 14_pointer.c -o 14_pointer.o $(CFLAGS)
+
+15_funcPointer.o: 15_funcPointer.c
+	$(CC) -c 15_funcPointer.c -o 15_funcPointer.o $(CFLAGS)
+
+16_string.o: 16_string.c
+	$(CC) -c 16_string.c -o 16_string.o $(CFLAGS)
+
+17_struct.o: 17_struct.c
+	$(CC) -c 17_struct.c -o 17_struct.o $(CFLAGS)
+
+18_union.o: 18_union.c
+	$(CC) -c 18_union.c -o 18_union.o $(CFLAGS)
+
+19_bitField.o: 19_bitField.c
+	$(CC) -c 19_bitField.c -o 19_bitField.o $(CFLAGS)
+
+20_typedef.o: 20_typedef.c
+	$(CC) -c 20_typedef.c -o 20_typedef.o $(CFLAGS)
+
+21_scanf.o: 21_scanf.c
+	$(CC) -c 21_scanf.c -o 21_scanf.o $(CFLAGS)
+
+22_file.o: 22_file.c
+	$(CC) -c 22_file.c -o 22_file.o $(CFLAGS)
+
+23_preprocessor.o: 23_preprocessor.c
+	$(CC) -c 23_preprocessor.c -o 23_preprocessor.o $(CFLAGS)
+
+24_include.o: 24_include.c
+	$(CC) -c 24_include.c -o 24_include.o $(CFLAGS)
+
+25_expression.o: 25_expression.c
+	$(CC) -c 25_expression.c -o 25_expression.o $(CFLAGS)

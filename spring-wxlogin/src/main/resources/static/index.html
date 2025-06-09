@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信扫码登录测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #qrcode {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<h1>微信扫码登录测试</h1>
+<img id="qrcode" src="" alt="微信登录二维码">
+<p id="status">等待扫码...</p>
+
+<script>
+    // 获取登录二维码
+    fetch('/wechat/getLoginQrCode')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('qrcode').src = data.message;
+            localStorage.setItem('sceneId', data.data);
+        });
+
+    // 轮询查询登录状态
+    const checkLoginStatus = () => {
+        const sceneId = localStorage.getItem('sceneId');
+        if (!sceneId) {
+            document.getElementById('status').innerText = '未获取到sceneId，请刷新页面重试';
+            return;
+        }
+        fetch(`/wechat/loginStatus?sceneId=${sceneId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'success') {
+                    document.getElementById('status').innerText = '登录成功！';
+                    // 登录成功后的操作
+                } else {
+                    document.getElementById('status').innerText = '等待扫码...';
+                }
+            })
+            .catch(error => {
+                document.getElementById('status').innerText = '查询状态失败，请检查网络或联系管理员';
+                console.error('查询登录状态失败:', error);
+            });
+    };
+
+    // 每隔3秒轮询一次
+    setInterval(checkLoginStatus, 3000);
+</script>
+</body>
+</html>

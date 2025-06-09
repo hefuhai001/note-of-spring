@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信支付调试</title>
+    <script type="text/javascript">
+        // 微信支付调起逻辑
+        function onBridgeReady() {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId": "your_app_id", // 替换为你的appId
+                    "timeStamp": "1414561699", // 替换为实际的时间戳
+                    "nonceStr": "e61463f8efa94090b1f366cccfbbb444", // 替换为实际的随机字符串
+                    "package": "prepay_id=wx201410272009395522657a690389285100", // 替换为实际的prepay_id
+                    "signType": "MD5", // 签名类型
+                    "paySign": "841C9BEB1086ED919067222321D06A8D" // 替换为实际的签名
+                },
+                function (res) {
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        alert("支付成功！");
+                    } else {
+                        alert("支付失败：" + res.err_msg);
+                    }
+                }
+            );
+        }
+
+        // 检测WeixinJSBridge是否加载完成
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        } else {
+            onBridgeReady();
+        }
+    </script>
+</head>
+<body>
+<h1>微信支付调试页面</h1>
+<button onclick="onBridgeReady()">调起微信支付</button>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# application-dev.yml (????)
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: localhost:3306/db_dev
+

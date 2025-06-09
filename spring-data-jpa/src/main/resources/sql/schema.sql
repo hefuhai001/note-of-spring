@@ -1,0 +1,14 @@
+-- CREATE TABLE users
+-- (
+--     id    BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     name  VARCHAR(255) NOT NULL,
+--     email VARCHAR(255) NOT NULL
+-- );
+--
+-- CREATE TABLE blog
+-- (
+--     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     title       VARCHAR(255) NOT NULL,
+--     context     VARCHAR(255) NOT NULL,
+--     create_time VARCHAR(255) NOT NULL
+-- );

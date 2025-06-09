@@ -1,0 +1,14 @@
+server:
+  port: 19090
+
+model:
+  doub:
+    key: 57cfaada-c978-45a5-b4fb-49260bc55360
+    id: ep-20250206211438-8lnrd
+  deep:
+    key: sk-4b6145929a2c40f8870be4f302570c7d
+    id: deepseek-v3
+  qwen:
+    key: sk-4b6145929a2c40f8870be4f302570c7d
+    id: qwen-plus
+

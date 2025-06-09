@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>excel导入导出</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+
+<button id="easyExcelBtn" type="button">
+    下载列表数据easyExcel
+</button>
+
+<hr/>
+<!-- 导入市场活动的模态窗口 -->
+<div class="modal fade" id="importActivityModal3" role="dialog">
+    <div class="modal-dialog" role="document" style="width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel3">导入EasyExcel校验测试</h4>
+            </div>
+            <div class="modal-body" style="height: 350px;">
+                <div style="position: relative;top: 20px; left: 50px;">
+                    请选择要上传的文件：<small style="color: gray;">[仅支持.xls]</small>
+                </div>
+                <div style="position: relative;top: 40px; left: 50px;">
+                    <input type="file" id="activityFile3">
+                </div>
+                <div style="position: relative;top: 60px; left: 50px;">
+                    <button id="importActivityBtn3" type="button" class="btn btn-primary">导入</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    /**
+     * easyExce导出
+     */
+    //给"批量导出"按钮添加单击事件
+    $("#easyExcelBtn").click(function () {
+        //发送同步请求
+        window.location.href = "easyExcel/write";
+    });
+
+
+    /**
+     * EasyExcel导入 校验
+     */
+    //给"导入"按钮添加单击事件
+    $("#importActivityBtn3").click(function () {
+        //收集参数
+        //——xls文件获取的是文件名
+        var activityFileName = $("#activityFile3").val();
+        var suffix = activityFileName.substr(activityFileName.lastIndexOf(".") + 1).toLocaleLowerCase();//xls,XLS,Xls,xLs,....截取字符串后缀，toLocaleLowerCase()：转小写
+        if (suffix != "xls") {
+            alert("只支持xls文件");
+            return;
+        }
+        //——获取文件内容
+        var activityFile = $("#activityFile3")[0].files[0];
+        //if(activityFile.size>5*1024*1024){//activityFile.size：获取文件大小
+        //    alert("文件大小不超过5MB");
+        //    return;
+        //}
+
+        //FormData是ajax提供的接口,可以模拟键值对向后台提交参数;
+        //FormData最大的优势是不但能提交文本数据，还能提交二进制数据
+        var formData = new FormData();
+        formData.append("activityFile", activityFile);
+
+        //发送请求
+        $.ajax({
+            url: '/EasyExcel/readCheck',
+            data: formData,
+            processData: false,//设置ajax向后台提交参数之前，是否把参数统一转换成字符串：true--是,false--不是,默认是true
+            contentType: false,//设置ajax向后台提交参数之前，是否把所有的参数统一按urlencoded编码：true--是,false--不是，默认是true
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code == "1") {
+                    //提示成功导入记录条数
+                    alert("成功导入" + data.retData + "条记录");
+                    //关闭模态窗口
+                    $("#importActivityModal3").modal("hide");
+                } else {
+                    //提示信息
+                    alert(data.message);
+                    //模态窗口不关闭
+                    $("#importActivityModal3").modal("show");
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

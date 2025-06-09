@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.deerweb.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.deerweb.entity.UserEntity">
+        <id column="u_id" property="id" />
+        <result column="u_name" property="name" />
+        <result column="u_sex" property="sex" />
+        <result column="u_age" property="age" />
+        <result column="u_idcard" property="idcard" />
+        <result column="u_pic" property="pic" />
+        <result column="u_acc" property="acc" />
+        <result column="u_pwd" property="pwd" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        u_id, u_name, u_sex, u_age, u_idcard, u_pic, u_acc, u_pwd, create_time, create_by, update_time, update_by, state
+    </sql>
+
+</mapper>

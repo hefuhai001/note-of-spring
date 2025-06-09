@@ -1,0 +1,21 @@
+server:
+  port: 9090
+
+#邮箱验证码配置
+spring:
+  mail:
+    host: smtp.163.com #smtp服务主机  qq邮箱则为smtp.qq.com; 163邮箱是smtp.163.com
+    protocol: smtp  #服务协议
+    default-encoding: UTF-8  # 编码集
+    username: 18365404517@163.com  #发送邮件的账户
+    password: your-email-auth-code #授权码
+    nickname: 超级帅哥  # 昵称
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+

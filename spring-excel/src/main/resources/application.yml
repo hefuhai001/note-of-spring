@@ -1,0 +1,22 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_upload?serverTimezone=GMT%2b8
+    username: root
+    password: ${DB_PASSWORD}
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# http://localhost:3000/swagger-ui/index
+# http://localhost:3000/doc.html

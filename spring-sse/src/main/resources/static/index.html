@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script>
+    // const eventSource = new EventSource('http://localhost:9090/sse');
+    const eventSource = new EventSource('http://localhost:19090/sse-stream');
+    eventSource.onmessage = (e) => {
+        console.log("Received data:", e.data);
+    };
+    eventSource.addEventListener("time-update", (e) => {
+        console.log("Custom event:", e.data);
+    });
+    eventSource.onerror = (e) => {
+        console.error("Error:", e);
+    };
+</script>
+</html>

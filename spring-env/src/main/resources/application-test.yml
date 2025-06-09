@@ -1,0 +1,7 @@
+# application-test.yml (????)
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: localhost:3306/db_test
+

@@ -1,0 +1,20 @@
+server:
+  port: 9091
+
+spring:
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+  basic:
+    enable: true
+    username: 1
+    password: ${DB_PASSWORD}
