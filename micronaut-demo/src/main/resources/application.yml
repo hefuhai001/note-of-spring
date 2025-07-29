@@ -1,0 +1,19 @@
+micronaut:
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      knife4j:
+        paths: classpath:META-INF/knife4j
+        mapping: /doc/**
+  openapi:
+    views:
+      spec: swagger-ui.enabled=true
+
+# 让 Micronaut 生成 OpenAPI 描述文件
+openapi:
+  info:
+    title: Micronaut-Knife4j DEMO
+    version: 1.0.0
+    description: 使用 Knife4j 生成接口文档
