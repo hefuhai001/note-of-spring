@@ -54,4 +54,5 @@ public class UserController {
     public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
         return ResponseEntity.ok(ApiResponse.success(userRepository.findAll()));
     }
+
 }

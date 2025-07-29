@@ -19,7 +19,7 @@ public class DataInitializer {
                 new User("hfh", "hfh@example.com"),
                 new User("lm", "lm@example.com")
         );
-        userRepository.saveAll(users);
+        // userRepository.saveAll(users);
     }
 
 }
