@@ -1,0 +1,21 @@
+server:
+  port: 8000
+
+jwt:
+  secret: "change_me_please_32_bytes_length_key"
+  expiration: 3600000   # 1h
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_jwt_demo?useSSL=false&serverTimezone=UTC
+    username: root
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # 只验证表结构
+    show-sql: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
