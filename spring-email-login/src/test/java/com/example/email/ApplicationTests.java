@@ -1,5 +1,6 @@
 package com.example.email;
 
+import com.example.email.service.RedisService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -21,6 +24,9 @@ class EmailApplicationTests {
 
     @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
+    private RedisService redisService;
 
     // 获取发件人邮箱
     @Value("${spring.mail.username}")
@@ -42,10 +48,22 @@ class EmailApplicationTests {
         return randomNumbers;
     }
 
+    public StringBuilder combineRandomNumbers(List<String> list) {
+        StringBuilder string = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            String integer = list.get(i);
+            String s = String.valueOf(integer);
+            string.append(s);
+        }
+        return string;
+    }
+
     @Test
     public void textRandom() {
         List<String> text = generateRandomNumbers();
         System.out.println(text);
+        StringBuilder stringBuilder = combineRandomNumbers(text);
+        System.out.println(stringBuilder);
     }
 
     @Test
@@ -62,7 +80,7 @@ class EmailApplicationTests {
         context.setVariable("text", text);
 
         // 第一个参数为模板的名称
-        String process = templateEngine.process("email-template.html", context);
+        String process = templateEngine.process("login-template.html", context);
         // 第二个参数true表示这是一个html文本
         helper.setText(process, true);
         mailSender.send(mimeMessage);
@@ -81,6 +99,20 @@ class EmailApplicationTests {
         // 设置邮件发送日期
         helper.setSentDate(new Date());
         return helper;
+    }
+
+
+    @Test
+    public void testRedis() {
+        //redisService.set("key", "value");
+        Object object = redisService.get("key");
+        System.out.println(object);
+        //比较地址
+        System.out.println(object == "value");
+        //比较值
+        System.out.println(Objects.equals(object, "value"));
+        String string = object.toString();
+        System.out.println(Objects.equals(string, "value"));
     }
 
 
