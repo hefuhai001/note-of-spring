@@ -11,8 +11,9 @@
     <groupId>com.example</groupId>
     <artifactId>spring-redis</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpringRedis</name>
-    <description>SpringRedis</description>
+    <name>spring-redis</name>
+    <description>spring-redis</description>
+
     <properties>
         <java.version>17</java.version>
     </properties>

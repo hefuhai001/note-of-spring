@@ -11,8 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>jwtdemo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>jwtdemo</name>
-    <description>jwtdemo</description>
+    <name>spring-security</name>
+    <description>spring-security</description>
 
     <properties>
         <java.version>17</java.version>

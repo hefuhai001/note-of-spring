@@ -1,7 +1,7 @@
-package com.example.jwt.config;
+package com.example.captcha.config;
 
-import com.example.jwt.resp.Result;
-import com.example.jwt.resp.ResultCode;
+import com.example.captcha.resp.ApiResponse;
+import com.example.captcha.resp.ApiResponseEnum;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -38,13 +38,13 @@ public class GlobalControllerAdvice {
      * @return
      */
     @ExceptionHandler(BindException.class)
-    public Result bindExceptionHandler(BindException e) {
+    public ApiResponse bindExceptionHandler(BindException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         List<String> collect = fieldErrors.stream().map(o -> o.getDefaultMessage()).collect(Collectors.toList());
 
-        StringBuffer sb = new StringBuffer(ResultCode.REQUEST_ERROR.getMsg());
+        StringBuffer sb = new StringBuffer(ApiResponseEnum.REQUEST_ERROR.getMsg());
         collect.forEach(item -> sb.append("，").append(item));
-        return Result.failure(ResultCode.REQUEST_ERROR, sb.toString());
+        return ApiResponse.failure(ApiResponseEnum.REQUEST_ERROR, sb.toString());
     }
 
     /**
@@ -55,13 +55,13 @@ public class GlobalControllerAdvice {
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result methodArgumentNotValidExceptionHandler(HttpServletResponse httpServletResponse, MethodArgumentNotValidException e) {
+    public ApiResponse methodArgumentNotValidExceptionHandler(HttpServletResponse httpServletResponse, MethodArgumentNotValidException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         List<String> collect = fieldErrors.stream().map(o -> o.getDefaultMessage()).collect(Collectors.toList());
 
-        StringBuffer sb = new StringBuffer(ResultCode.REQUEST_ERROR.getMsg());
+        StringBuffer sb = new StringBuffer(ApiResponseEnum.REQUEST_ERROR.getMsg());
         collect.forEach(item -> sb.append("，").append(item));
-        return Result.failure(ResultCode.REQUEST_ERROR, sb.toString());
+        return ApiResponse.failure(ApiResponseEnum.REQUEST_ERROR, sb.toString());
     }
 
     /**
@@ -71,13 +71,13 @@ public class GlobalControllerAdvice {
      * @return
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public Result constraintViolationExceptionHandler(ConstraintViolationException e) {
+    public ApiResponse constraintViolationExceptionHandler(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         List<String> collect = constraintViolations.stream().map(o -> o.getMessage()).collect(Collectors.toList());
 
-        StringBuffer sb = new StringBuffer(ResultCode.REQUEST_ERROR.getMsg());
+        StringBuffer sb = new StringBuffer(ApiResponseEnum.REQUEST_ERROR.getMsg());
         collect.forEach(item -> sb.append("，").append(item));
-        return Result.failure(ResultCode.REQUEST_ERROR, sb.toString());
+        return ApiResponse.failure(ApiResponseEnum.REQUEST_ERROR, sb.toString());
     }
 
     /**
@@ -90,6 +90,6 @@ public class GlobalControllerAdvice {
     @ResponseBody
     public Object handle(Exception e) {
         log.error(e.getMessage(), e);
-        return Result.failure(ResultCode.FAILURE, e.getMessage());
+        return ApiResponse.failure(ApiResponseEnum.FAILURE, e.getMessage());
     }
 }

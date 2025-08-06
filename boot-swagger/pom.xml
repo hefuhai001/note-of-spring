@@ -5,8 +5,8 @@
     <groupId>com.lms</groupId>
     <artifactId>boot-swagger</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Springboot-swagger</name>
-    <description>Springboot-swagger</description>
+    <name>boot-swagger</name>
+    <description>boot-swagger</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

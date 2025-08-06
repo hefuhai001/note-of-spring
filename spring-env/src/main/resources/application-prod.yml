@@ -1,7 +1,0 @@
-# application-prod.yml (????)
-spring:
-  profiles:
-    active: prod
-  datasource:
-    url: localhost:3306/db_prod
-

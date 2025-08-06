@@ -3,6 +3,6 @@ server:
 
 spring:
   application:
-    name: spring-ws
+    name: spring-sse
     admin:
       enabled: true

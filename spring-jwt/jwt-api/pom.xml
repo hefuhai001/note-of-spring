@@ -9,10 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>springboot</artifactId>
+    <artifactId>jwt-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpringbootJWT</name>
-    <description>springboot结合JWT示例</description>
+    <name>spring-jwt</name>
+    <description>spring-jwt</description>
+
     <properties>
         <java.version>17</java.version>
     </properties>

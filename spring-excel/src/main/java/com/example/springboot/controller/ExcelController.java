@@ -1,8 +1,8 @@
 package com.example.springboot.controller;
 
 import com.alibaba.excel.EasyExcel;
-import com.example.common.req.IdParam;
-import com.example.common.resp.Result;
+import com.example.jwt.req.IdParam;
+import com.example.jwt.resp.Result;
 import com.example.springboot.dto.EmpSaveParam;
 import com.example.springboot.entity.Emp;
 import com.example.springboot.mapper.ExcelMapper;

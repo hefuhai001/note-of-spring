@@ -1,4 +1,4 @@
-package com.example.common.req;
+package com.example.jwt.req;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

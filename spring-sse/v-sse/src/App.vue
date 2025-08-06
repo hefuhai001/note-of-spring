@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <ChatView/>
-    <!--<TestView/>-->
+    <TestView/>
     <!--<FlexView/>-->
     <!--<SseView/>-->
   </div>
 </template>
 
 <script>
-import ChatView from './components/ChatView.vue'
 import TestView from './components/TestView.vue'
 import FlexView from './components/FlexView.vue'
 import SseView from './components/SseView.vue'
@@ -16,7 +14,6 @@ import SseView from './components/SseView.vue'
 export default {
   name: 'App',
   components: {
-    ChatView,
     TestView,
     FlexView,
     SseView

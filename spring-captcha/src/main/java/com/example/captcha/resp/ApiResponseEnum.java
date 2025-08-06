@@ -1,4 +1,4 @@
-package com.example.jwt.resp;
+package com.example.captcha.resp;
 
 
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ResultCode {
+public enum ApiResponseEnum {
     SUCCESS(200, "成功"),
     REQUEST_ERROR(400, "参数校验失败"),
     FAILURE(500, "系统错误");

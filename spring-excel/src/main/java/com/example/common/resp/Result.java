@@ -1,4 +1,4 @@
-package com.example.common.resp;
+package com.example.jwt.resp;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

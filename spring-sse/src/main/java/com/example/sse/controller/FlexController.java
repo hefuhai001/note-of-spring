@@ -48,7 +48,6 @@ public class FlexController {
     }
 
 
-
     @GetMapping("/send/{userId}")
     public String send(@PathVariable String userId) {
         Sinks.Many<String> sink = userSinks.get(userId);

@@ -11,21 +11,9 @@
     <groupId>com.example</groupId>
     <artifactId>spring-ws</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Web-socket</name>
-    <description>Web-socket</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    <name>spring-ws</name>
+    <description>spring-ws</description>
+
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -52,8 +40,6 @@
             <artifactId>lombok</artifactId>
             <scope>annotationProcessor</scope>
         </dependency>
-
-
     </dependencies>
 
     <build>

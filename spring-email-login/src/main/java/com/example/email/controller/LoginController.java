@@ -44,7 +44,7 @@ public class LoginController {
         // 设置模板中的变量
         context.setVariable("text", list);
         // 第一个参数为模板的名称
-        String process = templateEngine.process("email-template.html", context);
+        String process = templateEngine.process("login-template.html", context);
         // 第二个参数true表示这是一个html文本
         helper.setText(process, true);
         mailSender.send(mimeMessage);
