@@ -61,4 +61,5 @@ file
 data-test
 
 .gitignore
+*.log
 
