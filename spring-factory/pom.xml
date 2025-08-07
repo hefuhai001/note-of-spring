@@ -8,11 +8,10 @@
         <version>3.5.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.hfh</groupId>
     <artifactId>springfactory</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>factory-demo</name>
-    <description>factory-demo</description>
 
     <properties>
         <java.version>17</java.version>
