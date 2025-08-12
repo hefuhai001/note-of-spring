@@ -17,7 +17,7 @@ import org.thymeleaf.context.Context;
 import java.util.*;
 
 @SpringBootTest
-class EmailApplicationTests {
+class ApplicationTests {
 
     @Autowired
     private JavaMailSender mailSender;
