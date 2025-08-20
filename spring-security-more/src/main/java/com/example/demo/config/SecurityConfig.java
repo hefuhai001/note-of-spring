@@ -59,14 +59,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(UserDetailsService uds, PasswordEncoder encoder) {
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setUserDetailsService(uds);
-//        provider.setPasswordEncoder(encoder);
-//        return new ProviderManager(provider);
-//    }
-
     private final CompositeUserDetailsService compositeUserDetailsService;
     private final PasswordEncoder passwordEncoder;
 
