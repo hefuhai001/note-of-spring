@@ -1,0 +1,42 @@
+package ${packageName};
+
+import ${packageName.replace('.service.impl', '.model')}.${entityName};
+import ${packageName.replace('.service.impl', '.mapper')}.${mapperName};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+/**
+* ${entityName} Service实现
+*/
+@Service
+public class ${className} implements ${className.replace('Impl', '')} {
+
+@Autowired
+private ${mapperName} ${mapperName.substring(0,1).toLowerCase()}${mapperName.substring(1)};
+
+@Override
+public ${entityName} getById(${primaryKeyType} id) {
+return ${mapperName.substring(0,1).toLowerCase()}${mapperName.substring(1)}.selectByPrimaryKey(id);
+}
+
+@Override
+public List<${entityName}> getAll() {
+return ${mapperName.substring(0,1).toLowerCase()}${mapperName.substring(1)}.selectAll();
+}
+
+@Override
+public int insert(${entityName} ${entityName.substring(0,1).toLowerCase()}${entityName.substring(1)}) {
+return ${mapperName.substring(0,1).toLowerCase()}${mapperName.substring(1)}.insert(${entityName.substring(0,1).toLowerCase()}${entityName.substring(1)});
+}
+
+@Override
+public int update(${entityName} ${entityName.substring(0,1).toLowerCase()}${entityName.substring(1)}) {
+return ${mapperName.substring(0,1).toLowerCase()}${mapperName.substring(1)}.updateByPrimaryKey(${entityName.substring(0,1).toLowerCase()}${entityName.substring(1)});
+}
+
+@Override
+public int delete(${primaryKeyType} id) {
+return ${mapperName.substring(0,1).toLowerCase()}${mapperName.substring(1)}.deleteByPrimaryKey(id);
+}
+}

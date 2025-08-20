@@ -1,0 +1,22 @@
+package ${packageName};
+
+import ${packageName.replace('.mapper', '.model')}.${entityName};
+import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
+
+/**
+* ${entityName} Mapper接口
+*/
+@Mapper
+public interface ${className} {
+
+${entityName} selectByPrimaryKey(${primaryKeyType} id);
+
+List<${entityName}> selectAll();
+
+int insert(${entityName} record);
+
+int updateByPrimaryKey(${entityName} record);
+
+int deleteByPrimaryKey(${primaryKeyType} id);
+}

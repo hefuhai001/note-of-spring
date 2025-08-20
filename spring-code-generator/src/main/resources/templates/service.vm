@@ -1,0 +1,35 @@
+package ${packageName};
+
+import ${packageName.replace('.service', '.model')}.${entityName};
+import java.util.List;
+
+/**
+* ${entityName} Service接口
+*/
+public interface ${className} {
+
+/**
+* 根据ID查询
+*/
+${entityName} getById(${primaryKeyType} id);
+
+/**
+* 查询所有
+*/
+List<${entityName}> getAll();
+
+/**
+* 新增
+*/
+int insert(${entityName} ${entityName.substring(0,1).toLowerCase()}${entityName.substring(1)});
+
+/**
+* 更新
+*/
+int update(${entityName} ${entityName.substring(0,1).toLowerCase()}${entityName.substring(1)});
+
+/**
+* 删除
+*/
+int delete(${primaryKeyType} id);
+}

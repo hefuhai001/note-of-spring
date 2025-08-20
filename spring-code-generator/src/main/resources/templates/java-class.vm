@@ -1,0 +1,27 @@
+package ${packageName};
+
+public class ${className} {
+#foreach($field in $fields)
+private ${field.type} ${field.name};
+#end
+
+#foreach($field in $fields)
+public ${field.type} get${field.name.substring(0,1).toUpperCase()}${field.name.substring(1)}() {
+return this.${field.name};
+}
+
+public void set${field.name.substring(0,1).toUpperCase()}${field.name.substring(1)}(${field.type} ${field.name}) {
+this.${field.name} = ${field.name};
+}
+#end
+
+@Override
+public String toString() {
+return "${className}{" +
+#foreach($field in $fields)
+    #if($foreach.count > 1) + ", " + #end
+"${field.name}='" + ${field.name} + "'" +
+#end
++ "}";
+}
+}
