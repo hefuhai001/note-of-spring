@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-security
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+  global-config:
+    db-config:
+      table-prefix:
+      id-type: auto
+
+jwt:
+  secret: "your-jwt-secret-key-generate-a-new-one"
+  expire: 3600000        # 1 小时（毫秒）
+
+springdoc:
+  packages-to-scan: com.example.demo.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+  basic:
+    enable: true
+    username: 1
+    password: ${DB_PASSWORD}
+
