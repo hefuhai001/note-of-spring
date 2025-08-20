@@ -1,0 +1,38 @@
+package ${packageName};
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/${entityNameLower}")
+public class ${className} {
+
+@GetMapping
+public List<${entityName}> getAll() {
+// 实现获取所有实体的逻辑
+return new ArrayList<>();
+}
+
+@GetMapping("/{id}")
+public ${entityName} getById(@PathVariable ${idType} id) {
+// 实现根据ID获取实体的逻辑
+return new ${entityName}();
+}
+
+@PostMapping
+public ${entityName} create(@RequestBody ${entityName} ${entityNameLower}) {
+// 实现创建实体的逻辑
+return ${entityNameLower};
+}
+
+@PutMapping("/{id}")
+public ${entityName} update(@PathVariable ${idType} id, @RequestBody ${entityName} ${entityNameLower}) {
+// 实现更新实体的逻辑
+return ${entityNameLower};
+}
+
+@DeleteMapping("/{id}")
+public void delete(@PathVariable ${idType} id) {
+// 实现删除实体的逻辑
+}
+}
