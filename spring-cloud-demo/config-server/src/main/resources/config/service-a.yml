@@ -1,0 +1,21 @@
+message: "Hello from Service A Config Server"
+description: "This is Service A configuration"
+
+server:
+  port: 8081
+
+service-a:
+  features:
+    enabled: true
+    timeout: 3000
+  api:
+    base-path: /api/service-a
+    endpoints:
+      - /message
+      - /health
+      - /config
+
+custom:
+  setting:
+    value: "service-a-specific-setting"
+    count: 100

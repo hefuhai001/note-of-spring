@@ -1,0 +1,48 @@
+# api-gateway/src/main/resources/application.yml
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      enabled: false  # 先禁用Config Client
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: service-a
+          uri: lb://service-a
+          predicates:
+            - Path=/api/service-a/**
+        - id: service-b
+          uri: lb://service-b
+          predicates:
+            - Path=/api/service-b/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# 添加Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway  # 暴露的健康端点
+      base-path: /actuator  # 默认就是/actuator，显式声明更清晰
+  endpoint:
+    health:
+      show-details: always  # 显示详细健康信息
+    gateway:
+      enabled: true  # 启用网关端点
+
+# 日志配置
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.boot.actuate: INFO
+    com.netflix.discovery: INFO

@@ -1,0 +1,29 @@
+POST http://localhost:8080/api/run
+Content-Type: application/json
+
+{
+  "code": "#include <stdio.h>\nint main(){\n    printf(\"Hello Maven Docker GCC\\n\");\n    return 0;\n}"
+}
+
+
+###
+POST http://localhost:8080/api/run
+Content-Type: application/json
+
+{
+  "code": "#include <stdio.h>\nint main(){\n    for(int i=0;i<5;++i)\n        printf(\"line %d\\n\",i);\n    return 0;\n}",
+  "args": ["10", "result.txt"]
+}
+
+
+###
+POST http://localhost:8080/api/run
+Content-Type: application/json
+
+{
+  "code": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <time.h>\n\ntypedef struct {\n    int  id;\n    char name[20];\n    int  score;\n} Student;\n\nint cmp(const void *a, const void *b) {\n    return ((Student*)b)->score - ((Student*)a)->score;\n}\n\nint main(int argc, char *argv[]) {\n    if (argc != 3) {\n        printf(\"Usage: %s <rows> <output.txt>\\n\", argv[0]);\n        return 0;\n    }\n    int rows = atoi(argv[1]);\n    const char *file = argv[2];\n    srand((unsigned)time(NULL));\n\n    Student *stu = malloc(rows * sizeof(Student));\n    printf(\"==== 生成数据 ====\\n\");\n    for (int i = 0; i < rows; ++i) {\n        stu[i].id = i + 1;\n        snprintf(stu[i].name, sizeof(stu[i].name), \"Stu%03d\", i + 1);\n        stu[i].score = 60 + rand() % 41;   // 60~100\n        printf(\"%3d  %-6s  %3d\\n\", stu[i].id, stu[i].name, stu[i].score);\n    }\n\n    qsort(stu, rows, sizeof(Student), cmp);\n    printf(\"\\n==== 排序后 ====\\n\");\n    for (int i = 0; i < rows; ++i)\n        printf(\"%3d  %-6s  %3d\\n\", stu[i].id, stu[i].name, stu[i].score);\n\n    FILE *fp = fopen(file, \"w\");\n    if (!fp) { perror(\"fopen\"); return 1; }\n    for (int i = 0; i < rows; ++i)\n        fprintf(fp, \"%d,%s,%d\\n\", stu[i].id, stu[i].name, stu[i].score);\n    fclose(fp);\n    printf(\"\\n==== 已写入 %s ====\\n\", file);\n\n    /* 读回验证 */\n    fp = fopen(file, \"r\");\n    printf(\"==== 读回验证 ====\\n\");\n    char line[64];\n    while (fgets(line, sizeof(line), fp)) {\n        printf(\"%s\", line);\n    }\n    fclose(fp);\n\n    free(stu);\n    return 0;\n}",
+  "args": [
+    "10",
+    "result.txt"
+  ]
+}

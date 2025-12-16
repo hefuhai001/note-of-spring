@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: false
+      # 可选：添加重试配置
+      retry:
+        initial-interval: 1000
+        max-attempts: 3
+        max-interval: 2000
+        multiplier: 1.1
+
+# 本地回退配置
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

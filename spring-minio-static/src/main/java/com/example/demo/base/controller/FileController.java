@@ -1,5 +1,6 @@
 package com.example.demo.base.controller;
 
+import com.example.demo.FileUploadResp;
 import com.example.demo.base.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -27,7 +28,7 @@ public class FileController {
 
     // **上传**
     @PostMapping("/upload")
-    public String upload(@RequestPart("file") MultipartFile file) {
+    public FileUploadResp upload(@RequestPart("file") MultipartFile file) {
         return fileService.upload(file);
     }
 

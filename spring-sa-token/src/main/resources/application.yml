@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: spring-sa-token
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_sa_token?serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: ${DB_PASSWORD}
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 200
+          max-idle: 10
+          min-idle: 0
+
+server:
+  port: 8080
+
+sa-token:
+  token-name: sa-token       # 前端携带 token 的 header / param 名称
+  timeout: 2592000          # 有效时间(秒)30-day
+  is-share: true            # 同端互踢 false 表示可多处登录
+  is-read-header: true      # 支持从 header 读取 token
+  is-read-cookie: true
+  is-log: true
+  token-style: uuid # uuid simple-uuid random-32 random-64 random-128 tik
+  active-timeout: -1 # min-active
+  is-concurrent: true # same account many address
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+  global-config:
+    db-config:
+      table-prefix:
+      id-type: auto

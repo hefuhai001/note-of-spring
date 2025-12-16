@@ -1,0 +1,21 @@
+message: "Hello from Service B Config Server"
+description: "This is Service B configuration"
+
+server:
+  port: 8082
+
+service-b:
+  features:
+    enabled: true
+    timeout: 5000
+  api:
+    base-path: /api/service-b
+    endpoints:
+      - /message
+      - /health
+      - /info
+
+custom:
+  setting:
+    value: "service-b-specific-setting"
+    count: 200
