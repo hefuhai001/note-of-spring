@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>seckill-demo</artifactId>
+    <artifactId>spring-seckill</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
