@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main {
+public class GenerateCss {
     public static void main(String[] args) {
         int start = 1;
         int end = 100;
