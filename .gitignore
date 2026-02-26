@@ -63,3 +63,5 @@ data-test
 .gitignore
 *.log
 
+v.mp4
+*.mp4
