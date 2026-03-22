@@ -1,28 +1,27 @@
-package com.example.gcc;
+package com.example.code.service.impl;
 
+import com.example.code.service.GccService;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.async.ResultCallback;
-import com.github.dockerjava.api.command.*;
-import com.github.dockerjava.api.model.*;
+import com.github.dockerjava.api.command.ExecCreateCmdResponse;
+import com.github.dockerjava.api.model.Frame;
+import com.github.dockerjava.api.model.StreamType;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/api")
-public class RunController {
+@Service
+public class GccServiceImpl implements GccService {
 
     @Autowired
     private DockerClient docker;
@@ -30,17 +29,13 @@ public class RunController {
     @Value("${docker.container-name}")
     private String CONTAINER_NAME;
 
-    @PostMapping("/run")
-    public String runC(@RequestBody Map<String, Object> req) throws Exception {
-        String source = (String) req.get("code");
-
-        /* 1. 生成唯一可执行名 */
+    @Override
+    public String compile(String code) throws Exception {
         String baseName = UUID.randomUUID().toString();
         String srcFile = baseName + ".c";
         String exeFile = baseName;
 
-        /* 2. 打成 tar */
-        byte[] tarBytes = tarBytes(srcFile, source);
+        byte[] tarBytes = tarBytes(srcFile, code);
         try (ByteArrayInputStream tarIn = new ByteArrayInputStream(tarBytes)) {
             docker.copyArchiveToContainerCmd(containerId())
                     .withTarInputStream(tarIn)
@@ -48,20 +43,10 @@ public class RunController {
                     .exec();
         }
 
-        /* 3. 拼装命令行参数 */
-        List<?> rawArgs = (List<?>) req.get("args");
-        String argStr = rawArgs == null ? "" :
-                rawArgs.stream()
-                        .map(Object::toString)
-                        .collect(Collectors.joining(" "));
-
         String cmd = String.format(
-                "cd /workspace && " +
-                        "gcc -Wall -O2 %s -o %s && " +
-                        "timeout 3s su nobody -s /bin/sh -c './%s %s' 2>&1",
-                srcFile, exeFile, exeFile, argStr);      // ← 用 %s 把参数塞进去
+                "cd /workspace && gcc -Wall -O2 %s -o %s 2>&1",
+                srcFile, exeFile);
 
-        /* 4. 执行 */
         ExecCreateCmdResponse exec = docker.execCreateCmd(containerId())
                 .withCmd("sh", "-c", cmd)
                 .withAttachStdout(true)
@@ -69,11 +54,43 @@ public class RunController {
                 .exec();
         String log = execAndGet(exec);
 
-        /* 5. 返回 */
         if (log.contains("error:") || log.contains("ERROR")) {
-            return "编译/运行错误:\n" + log;
+            return "编译错误:\n" + log;
         }
-        return String.format("编译通过(%s) \n%s", exeFile, log);
+        return baseName;
+    }
+
+    @Override
+    public String run(String taskId, List<String> args) throws Exception {
+        String exeFile = taskId;
+        String argStr = args == null ? "" :
+                args.stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining(" "));
+
+        String cmd = String.format(
+                "cd /workspace && timeout 3s su nobody -s /bin/sh -c './%s %s' 2>&1",
+                exeFile, argStr);
+
+        ExecCreateCmdResponse exec = docker.execCreateCmd(containerId())
+                .withCmd("sh", "-c", cmd)
+                .withAttachStdout(true)
+                .withAttachStderr(true)
+                .exec();
+
+        return execAndGet(exec);
+    }
+
+    @Override
+    public String compileAndRun(String code, List<String> args) throws Exception {
+        String taskId = compile(code);
+        if (taskId.startsWith("编译错误")) {
+            return taskId;
+        }
+
+        String result = run(taskId, args);
+
+        return String.format("编译通过(%s) \n%s", taskId, result);
     }
 
     private byte[] tarBytes(String fileName, String content) throws Exception {
@@ -111,6 +128,6 @@ public class RunController {
     private String containerId() {
         return docker.listContainersCmd()
                 .withNameFilter(List.of(CONTAINER_NAME))
-                .exec().get(0).getId();
+                .exec().getFirst().getId();
     }
 }
