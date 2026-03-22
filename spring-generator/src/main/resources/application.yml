@@ -1,0 +1,83 @@
+spring:
+  profiles:
+    active: dev
+    default: dev
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write-date-keys-as-timestamps: false
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
+      file-size-threshold: 2KB
+      location: /tmp
+      resolve-lazily: false
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=10000,expireAfterWrite=600s
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 16
+        queue-capacity: 100
+        keep-alive: 60s
+      thread-name-prefix: async-task-
+    scheduling:
+      pool:
+        size: 4
+      thread-name-prefix: scheduling-
+
+server:
+  port: 9900
+  tomcat:
+    max-connections: 10000 # 最大连接数
+    threads:
+      max: 800          # 最大工作线程数
+      min-spare: 100    # 最小空闲线程数
+    accept-count: 100   # 等待队列长度
+    connection-timeout: 20000
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: order
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: '代码生成器'
+      paths-to-match: '/**'
+      packages-to-scan: com.perfect.modules.generator.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    enable-footer-custom: true
+    footer-custom-content: "Apache License 2.0 | Copyright xiao he like-sleep"
+  basic:
+    enable: true
+    username: 1
+    password: ${DB_PASSWORD}
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+  global-config:
+    db-config:
+      table-prefix:
+      id-type: auto
+
+logging:
+  file:
+    name: app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 100MB
+      max-history: 30
+      total-size-cap: 3GB

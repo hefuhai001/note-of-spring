@@ -1,0 +1,16 @@
+package ${packageName};
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import ${packageName.replace('.service', '.entity')}.${entityName};
+
+/**
+ * <p>
+ * ${entityName} 服务类
+ * </p>
+ *
+ * @author perfect-admin
+ * @since ${.now}
+ */
+public interface ${className} extends IService<${entityName}> {
+
+}

@@ -1,0 +1,95 @@
+package ${packageName};
+
+import cn.dev33.satoken.util.SaResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.*;
+import ${packageName.replace('.controller', '.entity')}.${className};
+import ${packageName.replace('.controller', '.service')}.${className.replace('Controller', 'Service')};
+import lombok.RequiredArgsConstructor;
+
+/**
+ * <p>
+ * ${className} 前端控制器
+ * </p>
+ *
+ * @author perfect-admin
+ * @since ${.now}
+ */
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/${entityNameLower}")
+public class ${className} {
+
+    private final ${className.replace('Controller', 'Service')} ${entityNameLower}Service;
+
+    /**
+     * 分页查询${className}列表
+     *
+     * @param pageNum  页码
+     * @param pageSize 每页大小
+     * @return ${className}分页列表
+     */
+    @GetMapping("/page")
+    public SaResult page(@RequestParam(defaultValue = "1") Integer pageNum,
+                         @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<${className}> page = new Page<>(pageNum, pageSize);
+        return SaResult.data(${entityNameLower}Service.page(page));
+    }
+
+    /**
+     * 查询所有${className}列表
+     *
+     * @return ${className}列表
+     */
+    @GetMapping("/list")
+    public SaResult list() {
+        return SaResult.data(${entityNameLower}Service.list());
+    }
+
+    /**
+     * 根据ID查询${className}详情
+     *
+     * @param id ${className}ID
+     * @return ${className}详情
+     */
+    @GetMapping("/{id}")
+    public SaResult detail(@PathVariable ${idType} id) {
+        return SaResult.data(${entityNameLower}Service.getById(id));
+    }
+
+    /**
+     * 新增${className}
+     *
+     * @param ${entityNameLower} ${className}信息
+     * @return 操作结果
+     */
+    @PostMapping
+    public SaResult add(@RequestBody ${className} ${entityNameLower}) {
+        boolean result = ${entityNameLower}Service.save(${entityNameLower});
+        return result ? SaResult.ok("新增成功") : SaResult.error("新增失败");
+    }
+
+    /**
+     * 修改${className}
+     *
+     * @param ${entityNameLower} ${className}信息
+     * @return 操作结果
+     */
+    @PutMapping
+    public SaResult update(@RequestBody ${className} ${entityNameLower}) {
+        boolean result = ${entityNameLower}Service.updateById(${entityNameLower});
+        return result ? SaResult.ok("修改成功") : SaResult.error("修改失败");
+    }
+
+    /**
+     * 删除${className}
+     *
+     * @param id ${className}ID
+     * @return 操作结果
+     */
+    @DeleteMapping("/{id}")
+    public SaResult delete(@PathVariable ${idType} id) {
+        boolean result = ${entityNameLower}Service.removeById(id);
+        return result ? SaResult.ok("删除成功") : SaResult.error("删除失败");
+    }
+}

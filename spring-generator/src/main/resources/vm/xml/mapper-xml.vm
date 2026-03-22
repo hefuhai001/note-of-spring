@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${namespace}">
+
+    <resultMap id="BaseResultMap" type="${className}">
+        #foreach($field in $fields)
+            <result column="${field.name}" property="${field.name}" jdbcType="${field.type.toUpperCase()}" />
+        #end
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        #foreach($field in $fields)
+            #if($foreach.count > 1),#end
+            ${field.name}
+        #end
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="${primaryKey.type}" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM ${tableName}
+        WHERE ${primaryKey.name} = #{${primaryKey.name}}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM ${tableName}
+    </select>
+
+    <insert id="insert" parameterType="${className}">
+        INSERT INTO ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #foreach($field in $fields)
+                <if test="${field.name} != null">
+                    ${field.name},
+                </if>
+            #end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #foreach($field in $fields)
+                <if test="${field.name} != null">
+                    #{${field.name}},
+                </if>
+            #end
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="${className}">
+        UPDATE ${tableName}
+        <set>
+            #foreach($field in $fields)
+                #if(!$field.isPrimaryKey)
+                    <if test="${field.name} != null">
+                        ${field.name} = #{${field.name}},
+                    </if>
+                #end
+            #end
+        </set>
+        WHERE ${primaryKey.name} = #{${primaryKey.name}}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="${primaryKey.type}">
+        DELETE FROM ${tableName}
+        WHERE ${primaryKey.name} = #{${primaryKey.name}}
+    </delete>
+</mapper>

@@ -1,0 +1,407 @@
+
+### 全部模版
+GET {{baseUrl}}/api/code/templates
+
+
+### 模版详情
+GET {{baseUrl}}/api/code/template/bo.vm
+
+
+### 全部表
+GET {{baseUrl}}/api/code/database/tables
+
+
+### 表详情
+GET {{baseUrl}}/api/code/database/table/db_perfect/gen_table
+
+
+### 生成所有模板代码
+POST {{baseUrl}}/api/code/generate/all
+Content-Type: application/json
+
+{
+  "className": "User",
+  "packageName": "com.example",
+  "entityName": "User",
+  "entityNameLower": "user",
+  "idType": "Long",
+  "moduleName": "system",
+  "businessName": "user",
+  "functionName": "用户管理",
+  "primaryKeyType": "Long",
+  "mapperName": "UserMapper",
+  "namespace": "com.example.mapper.UserMapper",
+  "tableName": "t_user",
+  "fields": [
+    {
+      "name": "id",
+      "type": "Long"
+    },
+    {
+      "name": "username",
+      "type": "String"
+    },
+    {
+      "name": "email",
+      "type": "String"
+    }
+  ],
+  "columns": [
+    {
+      "pk": true,
+      "list": true,
+      "javaField": "id",
+      "javaType": "Long",
+      "columnComment": "用户ID"
+    },
+    {
+      "list": true,
+      "javaField": "username",
+      "javaType": "String",
+      "columnComment": "用户名"
+    },
+    {
+      "list": true,
+      "javaField": "email",
+      "javaType": "String",
+      "columnComment": "邮箱"
+    }
+  ],
+  "pkColumn": {
+    "javaField": "id"
+  },
+  "table": {},
+  "treeCode": "",
+  "dicts": ""
+}
+
+
+### 生成所有代码并打包成ZIP文件下载
+POST {{baseUrl}}/api/code/generate/all/zip
+Content-Type: application/json
+
+{
+  "className": "User",
+  "packageName": "com.example",
+  "entityName": "User",
+  "entityNameLower": "user",
+  "idType": "Long",
+  "moduleName": "system",
+  "businessName": "user",
+  "functionName": "用户管理",
+  "primaryKeyType": "Long",
+  "mapperName": "UserMapper",
+  "namespace": "com.example.mapper.UserMapper",
+  "tableName": "t_user",
+  "fields": [
+    {
+      "name": "id",
+      "type": "Long"
+    },
+    {
+      "name": "username",
+      "type": "String"
+    },
+    {
+      "name": "email",
+      "type": "String"
+    }
+  ],
+  "columns": [
+    {
+      "pk": true,
+      "list": true,
+      "javaField": "id",
+      "javaType": "Long",
+      "columnComment": "用户ID"
+    },
+    {
+      "list": true,
+      "javaField": "username",
+      "javaType": "String",
+      "columnComment": "用户名"
+    },
+    {
+      "list": true,
+      "javaField": "email",
+      "javaType": "String",
+      "columnComment": "邮箱"
+    }
+  ],
+  "pkColumn": {
+    "javaField": "id"
+  },
+  "table": {},
+  "treeCode": "",
+  "dicts": ""
+}
+
+
+### bo
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "entity.vm",
+  "variables": {
+    "packageName": "com.example.entity",
+    "className": "User",
+    "tableName": "t_user",
+    "classComment": "用户实体类",
+    "fields": [
+      {
+        "name": "id",
+        "type": "Long",
+        "isPrimaryKey": true
+      },
+      {
+        "name": "username",
+        "type": "String"
+      },
+      {
+        "name": "email",
+        "type": "String"
+      }
+    ]
+  }
+}
+
+
+### controller
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "controller.vm",
+  "variables": {
+    "packageName": "com.example.controller",
+    "className": "UserController",
+    "entityNameLower": "user",
+    "idType": "Long"
+  }
+}
+
+
+### entity
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "entity.vm",
+  "variables": {
+    "packageName": "com.example.entity",
+    "className": "User",
+    "tableName": "t_user",
+    "classComment": "用户实体类",
+    "fields": [
+      {
+        "name": "id",
+        "type": "Long",
+        "isPrimaryKey": true
+      },
+      {
+        "name": "username",
+        "type": "String"
+      },
+      {
+        "name": "email",
+        "type": "String"
+      }
+    ]
+  }
+}
+
+
+### mapper
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "mapper.vm",
+  "variables": {
+    "packageName": "com.example.mapper",
+    "className": "UserMapper",
+    "entityName": "User"
+  }
+}
+
+
+### service
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "service.vm",
+  "variables": {
+    "packageName": "com.example.service",
+    "className": "UserService",
+    "entityName": "User"
+  }
+}
+
+
+### service-impl
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "service-impl.vm",
+  "variables": {
+    "packageName": "com.example.service",
+    "className": "UserServiceImpl",
+    "entityName": "User",
+    "mapperName": "UserMapper"
+  }
+}
+
+
+### vo
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "entity.vm",
+  "variables": {
+    "packageName": "com.example.entity",
+    "className": "User",
+    "tableName": "t_user",
+    "classComment": "用户实体类",
+    "fields": [
+      {
+        "name": "id",
+        "type": "Long",
+        "isPrimaryKey": true
+      },
+      {
+        "name": "username",
+        "type": "String"
+      },
+      {
+        "name": "email",
+        "type": "String"
+      }
+    ]
+  }
+}
+
+
+### mapper-xml
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "mapper-xml.vm",
+  "variables": {
+    "namespace": "com.example.mapper.UserMapper",
+    "entityName": "User",
+    "tableName": "t_user",
+    "primaryKey": {
+      "name": "id",
+      "type": "Long",
+      "isPrimaryKey": true
+    },
+    "fields": [
+      {
+        "name": "id",
+        "type": "Long",
+        "isPrimaryKey": true
+      },
+      {
+        "name": "username",
+        "type": "String",
+        "comment": "用户名"
+      },
+      {
+        "name": "email",
+        "type": "String",
+        "comment": "邮箱"
+      }
+    ]
+  }
+}
+
+
+### api.vm
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "api.vm",
+  "variables": {
+    "className": "User",
+    "moduleName": "system",
+    "businessName": "user",
+    "functionName": "用户管理",
+    "pkColumn": {
+      "javaField": "id"
+    }
+  }
+}
+
+
+### types.vm
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "types.vm",
+  "variables": {
+    "className": "User",
+    "columns": [
+      {
+        "list": true,
+        "javaField": "id",
+        "javaType": "Long"
+      },
+      {
+        "list": true,
+        "javaField": "username",
+        "javaType": "String"
+      },
+      {
+        "list": true,
+        "javaField": "email",
+        "javaType": "String"
+      }
+    ],
+    "table": {},
+    "treeCode": ""
+  }
+}
+
+
+### index.vm
+POST {{baseUrl}}/api/code/generate
+Content-Type: application/json
+
+{
+  "templateName": "index.vm",
+  "variables": {
+    "className": "User",
+    "businessName": "user",
+    "moduleName": "system",
+    "functionName": "用户管理",
+    "columns": [
+      {
+        "pk": true,
+        "list": true,
+        "javaField": "id",
+        "columnComment": "用户ID"
+      },
+      {
+        "list": true,
+        "javaField": "username",
+        "columnComment": "用户名"
+      },
+      {
+        "list": true,
+        "javaField": "email",
+        "columnComment": "邮箱"
+      }
+    ],
+    "pkColumn": {
+      "javaField": "id"
+    },
+    "dicts": ""
+  }
+}
