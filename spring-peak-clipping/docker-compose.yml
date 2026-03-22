@@ -1,0 +1,111 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: peak-clipping-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: db_activity
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d db_activity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - peak-clipping-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: peak-clipping-redis
+    restart: unless-stopped
+    command: redis-server --requirepass 123456 --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "123456", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - peak-clipping-network
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: peak-clipping-redis-ui
+    restart: unless-stopped
+    environment:
+      - REDIS_HOSTS=local:redis:6379:1:123456
+    ports:
+      - "8081:8081"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - peak-clipping-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: peak-clipping-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - peak-clipping-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: peak-clipping-app
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/db_activity
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_PASSWORD: ${REDIS_PASSWORD}
+      SPRING_DATA_REDIS_DATABASE: 1
+      JAVA_OPTS: "-Xms256m -Xmx512m"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - peak-clipping-network
+    profiles:
+      - app
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  peak-clipping-network:
+    driver: bridge
