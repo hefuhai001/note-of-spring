@@ -1,10 +1,10 @@
-package com.example.gcc;
+package com.example.code;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringDockerGccApplicationTests {
+class ApiApplicationTests {
 
     @Test
     void contextLoads() {

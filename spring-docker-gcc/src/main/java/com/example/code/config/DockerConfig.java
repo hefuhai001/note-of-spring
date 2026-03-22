@@ -1,4 +1,4 @@
-package com.example.gcc.config;
+package com.example.code.config;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
