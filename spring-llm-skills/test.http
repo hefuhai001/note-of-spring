@@ -1,0 +1,33 @@
+###
+# curl -X POST http://localhost:8080/api/chat
+#  -H "Content-Type: application/json"
+#  -d '{"message": "北京今天天气怎么样？"}'
+
+POST http://localhost:8080/api/chat
+Content-Type: application/json
+
+{
+  "message": "北京今天天气怎么样？"
+}
+
+###
+
+
+# curl -X POST http://localhost:8080/api/skill/calculate
+#  -H "Content-Type: application/json"
+#  -d '{"expression": "100 * 0.85"}'
+
+POST http://localhost:8080/api/skill/calculate
+Content-Type: application/json
+
+{
+  "expression": "0.85 + 20"
+}
+
+###
+
+
+# curl http://localhost:8080/api/skills
+GET http://localhost:8080/api/skills
+
+###
