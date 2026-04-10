@@ -1,0 +1,19 @@
+### 添加书籍
+# curl -X POST http://localhost:8080/api/books
+#  -H "Content-Type: application/json"
+#  -d '{"title":"Spring Cloud 微服务实战","author":"翟永超","category":"编程","price":69.00,"stock":80}'
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "Spring Cloud 微服务实战",
+  "author": "翟永超",
+  "category": "编程",
+  "price": 69.00,
+  "stock": 80
+}
+
+### 分页查询所有
+
+# curl "http://localhost:8080/api/books?page=0&size=10"
+GET http://localhost:8080/api/books?page=0&size=10

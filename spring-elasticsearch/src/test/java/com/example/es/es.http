@@ -1,0 +1,81 @@
+
+### 测试1k插件分词
+
+# curl -X POST "localhost:9200/_analyze" -H 'Content-Type: application/json' -d '
+#{
+#  "analyzer": "ik_max_word",
+#  "text": "中华人民共和国"
+#}'
+POST localhost:9200/_analyze
+Content-Type: application/json
+
+
+{
+  "analyzer": "ik_max_word",
+  "text": "中华人民共和国"
+}
+
+###
+
+# 查看 ES 中的索引和数据
+
+###
+# curl -X GET "localhost:9200/_cat/indices?v"
+GET localhost:9200/_cat/indices?v
+
+###
+
+# 查看 books 索引中的数据
+
+###
+# curl -X GET "localhost:9200/books/_search?pretty"
+GET localhost:9200/books/_search?pretty
+
+###
+
+
+# 1. 删除旧的 ES 索引
+
+###
+# curl -X DELETE "localhost:9200/books"
+DELETE localhost:9200/books
+
+###
+
+# 2. 重启 Spring Boot 应用
+
+# 3. 查看启动日志，应该看到
+# 数据库已有数据，检查 ES 同步状态...
+# 同步 5 条数据到 ES
+
+# 4. 验证 ES 中的数据
+
+###
+# curl -X GET "localhost:9200/books/_search?pretty"
+GET localhost:9200/books/_search?pretty
+
+###
+
+# 查看 ES 中的所有索引
+
+###
+# curl -X GET "localhost:9200/_cat/indices?v"
+GET localhost:9200/_cat/indices?v
+
+###
+
+# 查看 books 索引中的数据量
+
+###
+# curl -X GET "localhost:9200/books/_count?pretty"
+GET localhost:9200/books/_count?pretty
+
+###
+
+# 查看 books 索引中的具体数据
+
+###
+# curl -X GET "localhost:9200/books/_search?pretty"
+GET localhost:9200/books/_search?pretty
+
+###

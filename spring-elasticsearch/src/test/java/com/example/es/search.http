@@ -1,0 +1,66 @@
+# 1. 先同步数据到 ES
+
+###
+# curl -X POST http://localhost:8080/api/search/sync
+POST http://localhost:8080/api/search/sync
+
+###
+
+# 2. 查看 ES 中的数据量
+
+###
+# curl http://localhost:8080/api/search/count
+GET http://localhost:8080/api/search/count
+
+###
+
+# 3. 测试搜索（优先 ES）
+
+###
+# curl -X POST http://localhost:8080/api/search/fallback
+#  -H "Content-Type: application/json"
+#  -d '{"keyword":"Spring","page":0,"size":10}'
+POST http://localhost:8080/api/search/fallback
+Content-Type: application/json
+
+{
+  "keyword": "java",
+  "page": 0,
+  "size": 10
+}
+
+###
+
+# 4. 只从 ES 搜索
+
+###
+# curl -X POST http://localhost:8080/api/search/es
+#  -H "Content-Type: application/json"
+#  -d '{"keyword":"Java","page":0,"size":10}'
+POST http://localhost:8080/api/search/es
+Content-Type: application/json
+
+{
+  "keyword": "Java",
+  "page": 0,
+  "size": 10
+}
+
+###
+
+# 5. 只从 PostgreSQL 搜索（对比）
+
+###
+# curl -X POST http://localhost:8080/api/search/pg
+#  -H "Content-Type: application/json"
+#  -d '{"keyword":"微服务","page":0,"size":10}'
+POST http://localhost:8080/api/search/pg
+Content-Type: application/json
+
+{
+  "keyword": "微服务",
+  "page": 0,
+  "size": 10
+}
+
+###
