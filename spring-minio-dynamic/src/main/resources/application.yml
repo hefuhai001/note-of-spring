@@ -1,7 +1,7 @@
 minio:
   endpoint: http://localhost:9000
-  accessKey: minioadmin
-  secretKey: minioadmin
+  accessKey: xsmart
+  secretKey: your-minio-secret-key
   bucket-name: default-bucket
 
 spring:

@@ -1,6 +1,7 @@
 package com.example.minio.util;
 
 import io.minio.*;
+import io.minio.errors.MinioException;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
@@ -58,14 +59,16 @@ public class MinioUtil {
 
     // 列出存储桶中的文件夹和文件
     public List<Result<Item>> listObjects(String bucketName, String prefix) throws Exception {
+        ListObjectsArgs.Builder builder = ListObjectsArgs.builder()
+                .bucket(bucketName)
+                .recursive(false);
+        
+        if (prefix != null && !prefix.isEmpty()) {
+            builder.prefix(prefix);
+        }
+        
         return StreamSupport.stream(
-                minioClient.listObjects(
-                        ListObjectsArgs.builder()
-                                .bucket(bucketName)
-                                .prefix(prefix)
-                                .recursive(false)
-                                .build()
-                ).spliterator(), false
+                minioClient.listObjects(builder.build()).spliterator(), false
         ).collect(Collectors.toList());
     }
 
@@ -112,5 +115,50 @@ public class MinioUtil {
                         .object(objectName)
                         .build()
         );
+    }
+
+    // 删除文件夹（包括文件夹内的所有文件）
+    public void removeFolder(String bucketName, String folderName) throws Exception {
+        String folderPath = folderName.endsWith("/") ? folderName : folderName + "/";
+        
+        // 递归删除文件夹下的所有对象
+        List<Result<Item>> objects = listObjects(bucketName, folderPath);
+        for (Result<Item> itemResult : objects) {
+            String objectName = itemResult.get().objectName();
+            removeFile(bucketName, objectName);
+        }
+        
+        // 删除文件夹本身
+        removeFile(bucketName, folderPath);
+    }
+
+    // 修改文件夹名称（重命名文件夹）
+    public void renameFolder(String bucketName, String oldFolderName, String newFolderName) throws Exception {
+        String oldFolderPath = oldFolderName.endsWith("/") ? oldFolderName : oldFolderName + "/";
+        String newFolderPath = newFolderName.endsWith("/") ? newFolderName : newFolderName + "/";
+        
+        // 列出旧文件夹下的所有对象
+        List<Result<Item>> objects = listObjects(bucketName, oldFolderPath);
+        
+        // 创建新文件夹
+        createFolder(bucketName, newFolderName);
+        
+        // 复制所有对象到新文件夹
+        for (Result<Item> itemResult : objects) {
+            String oldObjectName = itemResult.get().objectName();
+            String newObjectName = oldObjectName.replace(oldFolderPath, newFolderPath);
+            
+            // 复制对象
+            minioClient.copyObject(
+                CopyObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(newObjectName)
+                    .source(CopySource.builder().bucket(bucketName).object(oldObjectName).build())
+                    .build()
+            );
+        }
+        
+        // 删除旧文件夹及其内容
+        removeFolder(bucketName, oldFolderName);
     }
 }
