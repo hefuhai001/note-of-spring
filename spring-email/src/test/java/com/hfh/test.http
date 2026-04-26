@@ -1,0 +1,131 @@
+### 1. 发送简单邮件
+
+POST http://localhost:8080/api/email/simple
+Content-Type: application/json
+
+{
+  "to": "2109664977@qq.com",
+  "subject": "测试简单邮件",
+  "content": "这是一封测试邮件内容"
+}
+
+### 2. 发送HTML邮件
+
+POST http://localhost:8080/api/email/html
+Content-Type: application/json
+
+{
+  "to": "2109664977@qq.com",
+  "subject": "测试HTML邮件",
+  "content": "<h1>欢迎</h1><p style=\"color:red\">这是HTML内容</p>"
+}
+
+### 3. 发送模板邮件
+
+POST http://localhost:8080/api/email/template
+Content-Type: application/json
+
+{
+  "to": "2109664977@qq.com",
+  "subject": "欢迎注册",
+  "templateName": "mail/welcome",
+  "variables": {
+    "username": "张三",
+    "code": "654321",
+    "link": "https://example.com/activate",
+    "expireMinutes": 30
+  }
+}
+
+### 单收件人 + 多附件
+
+POST http://localhost:8080/api/email/html
+Content-Type: application/json
+
+{
+  "to": "2109664977@qq.com",
+  "subject": "【测试】带附件的异步HTML邮件",
+  "content": "<h2 style=\"color:#2196F3\">📧 异步邮件测试</h2><p>这是一封<strong>全异步发送</strong>的HTML邮件，包含附件。</p><p>发送时间: 2026-04-25</p>",
+  "html": true,
+  "attachments": [
+    "C:/workspace/idea/note-of-spring/spring-email/tmp/test_data.json",
+    "C:/workspace/idea/note-of-spring/spring-email/tmp/test_document.txt"
+  ]
+}
+
+
+### 群发多收件人 + 附件
+POST http://localhost:8080/api/email/html
+Content-Type: application/json
+
+{
+  "toList": [
+    "user1@example.com",
+    "user2@example.com",
+    "user3@example.com"
+  ],
+  "cc": [
+    "boss@example.com"
+  ],
+  "subject": "【群发】项目周报 - 带附件",
+  "content": "<div style=\"font-family:Arial,sans-serif\"><h2>📊 本周项目进展</h2><p>各位同事好，附件为本周项目详细报告，请查收。</p><hr><p style=\"color:#666;font-size:12px\">本邮件由系统自动发送</p></div>",
+  "html": true,
+  "attachments": [
+    "C:/workspace/idea/note-of-spring/spring-email/tmp/test_data.json",
+    "C:/workspace/idea/note-of-spring/spring-email/tmp/test_document.txt"
+  ]
+}
+
+### 批量发送（每封邮件内容不同）
+
+POST http://localhost:8080/api/email/batch
+Content-Type: application/json
+
+[
+  {
+    "to": "2109664977@qq.com",
+    "subject": "Alice 专属通知",
+    "content": "<p>Hi Alice, 您的任务已完成。</p>",
+    "html": true
+  },
+  {
+    "to": "2302758554@qq.com",
+    "subject": "Bob 专属通知",
+    "content": "<p>Hi Bob, 请查收附件报告。</p>",
+    "html": true,
+    "attachments": [
+      "C:/workspace/idea/note-of-spring/spring-email/tmp/test_data.json"
+    ]
+  },
+  {
+    "toList": [
+      "2302758554@qq.com",
+      "2109664977@qq.com"
+    ],
+    "subject": "团队通知",
+    "content": "本周五下午3点开会，请准时参加。",
+    "html": false
+  }
+]
+
+### 批量发送（每封邮件内容不同）
+
+POST http://localhost:8080/api/email/template
+Content-Type: application/json
+
+{
+  "toList": [
+    "vip1@example.com",
+    "vip2@example.com"
+  ],
+  "subject": "🎉 会员专属优惠",
+  "templateName": "mail/welcome",
+  "variables": {
+    "username": "尊贵会员",
+    "code": "VIP2026",
+    "link": "https://example.com/vip",
+    "expireMinutes": 60
+  }
+}
+
+###

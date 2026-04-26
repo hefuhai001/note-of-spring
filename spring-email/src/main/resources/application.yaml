@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: spring-email
+  mail:
+    host: smtp.163.com         # SMTP服务器地址
+    port: 994                  # 端口 (QQ邮箱用465/587)
+    username: 18365404517@163.com   # 发件人邮箱
+    password: your-email-auth-code   # 授权码（非登录密码）
+    protocol: smtps
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+#          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+        debug: true            # 调试模式，开发时开启
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+
+server:
+  port: 8080

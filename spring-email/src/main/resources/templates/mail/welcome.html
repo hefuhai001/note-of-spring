@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎邮件</title>
+    <style>
+        .container { max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; }
+        .header { background: #4CAF50; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f9f9f9; }
+        .footer { padding: 20px; text-align: center; color: #666; font-size: 12px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>欢迎加入！</h1>
+    </div>
+    <div class="content">
+        <p>尊敬的 <strong th:text="${username}">用户</strong>，您好！</p>
+        <p>感谢您注册我们的服务。您的验证码是：</p>
+        <h2 style="color: #4CAF50; text-align: center;" th:text="${code}">123456</h2>
+        <p style="text-align: center;">
+            <a th:href="${link}" class="btn">立即激活</a>
+        </p>
+        <p>此验证码有效期为 <span th:text="${expireMinutes}">30</span> 分钟。</p>
+    </div>
+    <div class="footer">
+        <p>如非本人操作，请忽略此邮件。</p>
+        <p>© 2026 Email System</p>
+    </div>
+</div>
+</body>
+</html>
