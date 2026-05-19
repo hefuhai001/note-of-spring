@@ -7,12 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 @SpringBootApplication
-public class SpringCodeGeneratorApplication {
+public class BootApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(SpringCodeGeneratorApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(BootApplication.class);
 
     public static void main(String[] args) {
-        ConfigurableEnvironment env = SpringApplication.run(SpringCodeGeneratorApplication.class, args).getEnvironment();
+        ConfigurableEnvironment env = SpringApplication.run(BootApplication.class, args).getEnvironment();
         String applicationName = env.getProperty("spring.application.name");
         String serverPort = env.getProperty("server.port");
 

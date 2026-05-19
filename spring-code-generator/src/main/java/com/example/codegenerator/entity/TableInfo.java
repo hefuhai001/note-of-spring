@@ -1,7 +1,5 @@
 package com.example.codegenerator.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-
 /**
  * 数据库表信息实体
  */
