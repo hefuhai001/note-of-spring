@@ -1,0 +1,32 @@
+docker:
+  host: tcp://172.19.75.227:2375
+  tls-verify: false
+  container-name: gcc-tiny
+  cert-path: classpath:docker-certs
+
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/db_code_run
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: ${DB_PASSWORD}
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 200
+          max-idle: 10
+          min-idle: 0
+

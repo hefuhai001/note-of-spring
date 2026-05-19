@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="asia.hfh.code.mapper.TaskMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="asia.hfh.code.entity.TaskEntity">
+        <id column="id" property="id"/>
+        <result column="exe_name" property="exeName"/>
+        <result column="code" property="code"/>
+        <result column="args" property="args" typeHandler="asia.hfh.code.handler.JsonNodeTypeHandler"/>
+        <result column="status" property="status"/>
+        <result column="result" property="result"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , exe_name, code, args, status, result
+    </sql>
+
+    <select id="getTaskDetail" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gcc_task where id=#{id}
+    </select>
+
+    <!-- 复用你的 BaseResultMap，保证 args 走 JsonNodeTypeHandler -->
+    <select id="selectTaskPage" resultMap="BaseResultMap">
+        SELECT id,
+               exe_name,
+               code,
+               args,
+               status,
+               result,
+               created_at,
+               updated_at
+        FROM gcc_task
+        ORDER BY created_at DESC
+            LIMIT #{size}
+        OFFSET #{offset}
+    </select>
+
+    <select id="countTask" resultType="long">
+        SELECT COUNT(*)
+        FROM gcc_task
+    </select>
+
+</mapper>

@@ -1,0 +1,99 @@
+server:
+  port: 8080
+  tomcat:
+    max-connections: 10000 # 最大连接数
+    threads:
+      max: 800          # 最大工作线程数
+      min-spare: 100    # 最小空闲线程数
+    accept-count: 100   # 等待队列长度
+    connection-timeout: 20000
+
+spring:
+  application:
+    name: code-app
+  profiles:
+    active: dev
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write-date-keys-as-timestamps: false
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
+      file-size-threshold: 2KB
+      location: /tmp
+      resolve-lazily: false
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=10000,expireAfterWrite=600s
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 16
+        queue-capacity: 100
+        keep-alive: 60s
+      thread-name-prefix: async-task-
+    scheduling:
+      pool:
+        size: 4
+      thread-name-prefix: scheduling-
+
+sa-token:
+  token-name: sa-token      # 前端携带 token 的 header / param 名称
+  timeout: 2592000          # 有效时间(秒)30-day
+  is-share: true            # 同端互踢 false 表示可多处登录
+  is-read-header: true      # 支持从 header 读取 token
+  is-read-cookie: true
+  is-log: true
+  token-style: uuid # uuid simple-uuid random-32 random-64 random-128 tik
+  active-timeout: -1 # min-active
+  is-concurrent: true # same account many address
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: asia.hfh.code.sys.entity
+  type-handlers-package: asia.hfh.code.gcc.handler   # 自定义 handler 包（可选）
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+  global-config:
+    db-config:
+      table-prefix:
+      id-type: auto
+      insert-strategy: not_null
+      update-strategy: not_null
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: order
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: '用户端'
+      paths-to-match: '/**'
+      packages-to-scan: asia.hfh.code.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    enable-footer-custom: true
+    footer-custom-content: "Apache License 2.0 | Copyright xiao he like sleep"
+  basic:
+    enable: true
+    username: 1
+    password: ${DB_PASSWORD}
+
+logging:
+  file:
+    name: app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 100MB
+      max-history: 30
+      total-size-cap: 3GB
