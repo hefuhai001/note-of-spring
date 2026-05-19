@@ -1,11 +1,11 @@
 package com.perfect;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.ConfigurableEnvironment;
 
-import static cn.dev33.satoken.SaManager.log;
-
+@Slf4j
 @SpringBootApplication
 public class PerfectApplication {
 
