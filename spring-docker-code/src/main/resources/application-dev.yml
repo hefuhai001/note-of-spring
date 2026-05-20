@@ -1,12 +1,12 @@
 docker:
   host: tcp://172.19.75.227:2375
   tls-verify: false
-  container-name: gcc-tiny
+  container-name: code-runner
   cert-path: classpath:docker-certs
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/db_code_run
+    url: jdbc:postgresql://127.0.0.1:5432/db_code_runner
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver

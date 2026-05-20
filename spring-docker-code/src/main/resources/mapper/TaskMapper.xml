@@ -6,35 +6,30 @@
     <resultMap id="BaseResultMap" type="asia.hfh.code.entity.TaskEntity">
         <id column="id" property="id"/>
         <result column="exe_name" property="exeName"/>
+        <result column="language" property="language"/>
         <result column="code" property="code"/>
-        <result column="args" property="args" typeHandler="asia.hfh.code.handler.JsonNodeTypeHandler"/>
+        <result column="args" property="args" typeHandler="asia.hfh.code.handler.StringListTypeHandler"/>
         <result column="status" property="status"/>
         <result column="result" property="result"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id
-        , exe_name, code, args, status, result
+        id, exe_name, language, code, args, status, result, created_at, updated_at
     </sql>
 
     <select id="getTaskDetail" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from gcc_task where id=#{id}
+        from code_task where id=#{id}
     </select>
 
-    <!-- 复用你的 BaseResultMap，保证 args 走 JsonNodeTypeHandler -->
     <select id="selectTaskPage" resultMap="BaseResultMap">
-        SELECT id,
-               exe_name,
-               code,
-               args,
-               status,
-               result,
-               created_at,
-               updated_at
-        FROM gcc_task
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM code_task
         ORDER BY created_at DESC
             LIMIT #{size}
         OFFSET #{offset}
@@ -42,7 +37,7 @@
 
     <select id="countTask" resultType="long">
         SELECT COUNT(*)
-        FROM gcc_task
+        FROM code_task
     </select>
 
 </mapper>

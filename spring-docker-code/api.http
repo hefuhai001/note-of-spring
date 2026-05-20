@@ -1,121 +1,123 @@
-POST http://localhost:8080/api/run
-Content-Type: application/json
 
-{
-  "code": "#include <stdio.h>\nint main(){\n    printf(\"Hello Maven Docker GCC\\n\");\n    return 0;\n}",
-  "args": []
-}
-
-
-###
-POST http://localhost:8080/api/run
-Content-Type: application/json
-
-{
-  "code": "#include <stdio.h>\nint main(){\n    for(int i=0;i<5;++i)\n        printf(\"line %d\\n\",i);\n    return 0;\n}",
-  "args": [
-    "10",
-    "result.txt"
-  ]
-}
-
-
-###
-POST http://localhost:8080/api/run
-Content-Type: application/json
-
-{
-  "code": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <time.h>\n\ntypedef struct {\n    int  id;\n    char name[20];\n    int  score;\n} Student;\n\nint cmp(const void *a, const void *b) {\n    return ((Student*)b)->score - ((Student*)a)->score;\n}\n\nint main(int argc, char *argv[]) {\n    if (argc != 3) {\n        printf(\"Usage: %s <rows> <output.txt>\\n\", argv[0]);\n        return 0;\n    }\n    int rows = atoi(argv[1]);\n    const char *file = argv[2];\n    srand((unsigned)time(NULL));\n\n    Student *stu = malloc(rows * sizeof(Student));\n    printf(\"==== 生成数据 ====\\n\");\n    for (int i = 0; i < rows; ++i) {\n        stu[i].id = i + 1;\n        snprintf(stu[i].name, sizeof(stu[i].name), \"Stu%03d\", i + 1);\n        stu[i].score = 60 + rand() % 41;   // 60~100\n        printf(\"%3d  %-6s  %3d\\n\", stu[i].id, stu[i].name, stu[i].score);\n    }\n\n    qsort(stu, rows, sizeof(Student), cmp);\n    printf(\"\\n==== 排序后 ====\\n\");\n    for (int i = 0; i < rows; ++i)\n        printf(\"%3d  %-6s  %3d\\n\", stu[i].id, stu[i].name, stu[i].score);\n\n    FILE *fp = fopen(file, \"w\");\n    if (!fp) { perror(\"fopen\"); return 1; }\n    for (int i = 0; i < rows; ++i)\n        fprintf(fp, \"%d,%s,%d\\n\", stu[i].id, stu[i].name, stu[i].score);\n    fclose(fp);\n    printf(\"\\n==== 已写入 %s ====\\n\", file);\n\n    /* 读回验证 */\n    fp = fopen(file, \"r\");\n    printf(\"==== 读回验证 ====\\n\");\n    char line[64];\n    while (fgets(line, sizeof(line), fp)) {\n        printf(\"%s\", line);\n    }\n    fclose(fp);\n\n    free(stu);\n    return 0;\n}",
-  "args": [
-    "10",
-    "result.txt"
-  ]
-}
-
-
-###
-POST http://localhost:8080/api/run
-Content-Type: application/json
-
-{
-  "code": "#include <stdio.h>\n#include <stdlib.h>\n\n/* 返回满足 nums[i] + nums[j] == target 的两个下标 {i,j} */\nint* twoSum(int* nums, int numsSize, int target, int* returnSize) {\n    int* res = (int*)malloc(2 * sizeof(int));\n    *returnSize = 2;\n\n    /* 暴力枚举即可，题目保证唯一解 */\n    for (int i = 0; i < numsSize - 1; ++i) {\n        for (int j = i + 1; j < numsSize; ++j) {\n            if (nums[i] + nums[j] == target) {\n                res[0] = i;\n                res[1] = j;\n                return res;\n            }\n        }\n    }\n    /* 理论上不会执行到这里 */\n    res[0] = res[1] = -1;\n    return res;\n}\n\nint main(int argc, char *argv[]) {\n    int n = atoi(argv[1]);\n    int target = atoi(argv[2]);\n    int *nums = malloc(n * sizeof(int));\n    for (int i = 0; i < n; ++i) nums[i] = atoi(argv[3 + i]);\n\n    int returnSize;\n    int *ans = twoSum(nums, n, target, &returnSize);\n    printf(\"[%d, %d]\\n\", ans[0], ans[1]);\n    free(nums); free(ans);\n    return 0;\n}",
-  "args": [
-    "4",
-    "9",
-    "2",
-    "7",
-    "11",
-    "15"
-  ]
-}
-
-###
-POST http://localhost:8080/api/run
-Content-Type: application/json
-
-{
-  "code": "#include <stdio.h>\n#include <stdlib.h>\n\nint* twoSum(int* nums, int numsSize, int target, int* returnSize){\n    int* res = (int*)malloc(2 * sizeof(int));\n    *returnSize = 2;\n    for (int i = 0; i < numsSize - 1; ++i){\n        for (int j = i + 1; j < numsSize; ++j){\n            if (nums[i] + nums[j] == target){\n                res[0] = i;\n                res[1] = j;\n                return res;\n            }\n        }\n    }\n    res[0] = res[1] = -1;\n    return res;\n}\n\nint main(int argc, char *argv[]){\n    int target = atoi(argv[1]);\n    int numsSize = argc - 2;\n    int *nums = malloc(numsSize * sizeof(int));\n    for (int i = 0; i < numsSize; ++i) nums[i] = atoi(argv[2 + i]);\n    int returnSize;\n    int *ans = twoSum(nums, numsSize, target, &returnSize);\n    printf(\"[%d, %d]\\n\", ans[0], ans[1]);\n    free(nums); free(ans);\n    return 0;\n}",
-  "args": [
-    "9",
-    [
-      "2",
-      "7",
-      "11",
-      "15"
-    ]
-  ]
-}
-
-###
-POST http://localhost:8080/api/run
-Content-Type: application/json
-
-{
-  "code": "#include <stdio.h>\n#include <stdlib.h>\n\nint* twoSum(int* nums, int numsSize, int target, int* returnSize){\n    int* res = (int*)malloc(2 * sizeof(int));\n    *returnSize = 2;\n    for (int i = 0; i < numsSize - 1; ++i){\n        for (int j = i + 1; j < numsSize; ++j){\n            if (nums[i] + nums[j] == target){\n                res[0] = i;\n                res[1] = j;\n                return res;\n            }\n        }\n    }\n    res[0] = res[1] = -1;\n    return res;\n}\n\nint main(int argc, char *argv[]){\n    int target = atoi(argv[1]);\n    int numsSize = argc - 2;\n    int *nums = malloc(numsSize * sizeof(int));\n    for (int i = 0; i < numsSize; ++i) nums[i] = atoi(argv[2 + i]);\n    int returnSize;\n    int *ans = twoSum(nums, numsSize, target, &returnSize);\n    printf(\"[%d, %d]\\n\", ans[0], ans[1]);\n    free(nums); free(ans);\n    return 0;\n}",
-  "args": [
-    "9",
-    [
-      "2",
-      "7",
-      "11",
-      "15"
-    ]
-  ],
-  "problemId": 1,
-  "userId": 1
-}
-
-###
-POST http://localhost:8080/api/run
-Content-Type: application/json
-
-{
-  "code": "#include <stdio.h>\nint main(){\n    printf(\"Hello Maven Docker GCC\\n\");\n    return 0;\n}",
-  "args": [],
-  "problemId": 1,
-  "userId": 1
-}
-
-
-###
+### ==================== C ====================
 POST http://localhost:8080/api/task/create
 Content-Type: application/json
 
 {
-  "code": "#include <stdio.h>\n#include <stdlib.h>\n\nint* twoSum(int* nums, int numsSize, int target, int* returnSize){\n    int* res = (int*)malloc(2 * sizeof(int));\n    *returnSize = 2;\n    for (int i = 0; i < numsSize - 1; ++i){\n        for (int j = i + 1; j < numsSize; ++j){\n            if (nums[i] + nums[j] == target){\n                res[0] = i;\n                res[1] = j;\n                return res;\n            }\n        }\n    }\n    res[0] = res[1] = -1;\n    return res;\n}\n\nint main(int argc, char *argv[]){\n    int target = atoi(argv[1]);\n    int numsSize = argc - 2;\n    int *nums = malloc(numsSize * sizeof(int));\n    for (int i = 0; i < numsSize; ++i) nums[i] = atoi(argv[2 + i]);\n    int returnSize;\n    int *ans = twoSum(nums, numsSize, target, &returnSize);\n    printf(\"[%d, %d]\\n\", ans[0], ans[1]);\n    free(nums); free(ans);\n    return 0;\n}",
-  "args": [
-    "9",
-    [
-      "2",
-      "7",
-      "11",
-      "15"
-    ]
-  ]
+  "language": "c",
+  "code": "#include <stdio.h>\nint main() { printf(\"Hello from C!\"); return 0; }",
+  "args": []
 }
 
-
-###
-GET http://localhost:8080/api/task/result/b0841dc6-3173-4f76-bce9-65027a602f69
+### C 带参数
+POST http://localhost:8080/api/task/create
 Content-Type: application/json
 
+{
+  "language": "c",
+  "code": "#include <stdio.h>\n#include <stdlib.h>\nint main(int argc, char *argv[]) {\n  for (int i = 1; i < argc; i++) printf(\"arg%d=%s\\n\", i, argv[i]);\n  return 0;\n}",
+  "args": ["hello", "world"]
+}
+
+### ==================== C++ ====================
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "cpp",
+  "code": "#include <iostream>\nint main() { std::cout << \"Hello from C++!\" << std::endl; return 0; }",
+  "args": []
+}
+
+### ==================== Java ====================
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "java",
+  "code": "public class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Hello from Java!\");\n  }\n}",
+  "args": []
+}
+
+### Java 带参数
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "java",
+  "code": "public class Main {\n  public static void main(String[] args) {\n    for (String arg : args) System.out.println(arg);\n  }\n}",
+  "args": ["foo", "bar"]
+}
+
+### ==================== Python ====================
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "python",
+  "code": "print(\"Hello from Python!\")",
+  "args": []
+}
+
+### Python 带参数
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "python",
+  "code": "import sys\nfor arg in sys.argv[1:]:\n    print(arg)",
+  "args": ["spam", "eggs"]
+}
+
+### ==================== JavaScript ====================
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "javascript",
+  "code": "console.log(\"Hello from JavaScript!\");",
+  "args": []
+}
+
+### JavaScript 带参数
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "javascript",
+  "code": "process.argv.slice(2).forEach(a => console.log(a));",
+  "args": ["a", "b"]
+}
+
+### ==================== Rust ====================
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "rust",
+  "code": "fn main() { println!(\"Hello from Rust!\"); }",
+  "args": []
+}
+
+### ==================== Go ====================
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "go",
+  "code": "package main\nimport \"fmt\"\nfunc main() { fmt.Println(\"Hello from Go!\") }",
+  "args": []
+}
+
+### ==================== .NET (C#) ====================
+POST http://localhost:8080/api/task/create
+Content-Type: application/json
+
+{
+  "language": "dotnet",
+  "code": "Console.WriteLine(\"Hello from C#!\");",
+  "args": []
+}
+
+### ==================== 查询任务结果 ====================
+GET http://localhost:8080/api/task/result/055bc7c0-218b-4ee1-90be-a65f2629f22f

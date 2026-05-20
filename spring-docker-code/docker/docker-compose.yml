@@ -1,15 +1,13 @@
-version: '3.8'
-
 services:
-  gcc-tiny:
+  code-runner:
     build:
-      context: ..
+      context: .
       dockerfile: Dockerfile
-    container_name: gcc-tiny
+    container_name: code-runner
     volumes:
-      - gcc-data:/workspace
+      - workspace-data:/workspace
     entrypoint: [ "sh", "-c", "trap 'exit 0' SIGTERM; while :; do sleep 86400 & wait; done" ]
     restart: unless-stopped
 
 volumes:
-  gcc-data:
+  workspace-data:

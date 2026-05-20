@@ -1,14 +1,15 @@
 package asia.hfh.code.entity;
 
 import asia.hfh.code.base.BaseEntity;
-import asia.hfh.code.handler.JsonNodeTypeHandler;
+import asia.hfh.code.handler.StringListTypeHandler;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +26,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName(value = "gcc_task")
+@TableName(value = "code_task")
 @Schema(name = "TaskEntity", description = "")
 public class TaskEntity extends BaseEntity<TaskEntity> {
 
@@ -35,11 +36,14 @@ public class TaskEntity extends BaseEntity<TaskEntity> {
     @TableField(value = "exe_name")
     private String exeName;
 
+    @TableField("language")
+    private String language;
+
     @TableField("code")
     private String code;
 
-    @TableField(value = "args", typeHandler = JsonNodeTypeHandler.class)
-    private JsonNode args;
+    @TableField(value = "args", typeHandler = StringListTypeHandler.class)
+    private List<String> args;
 
     @TableField("status")
     private String status;
