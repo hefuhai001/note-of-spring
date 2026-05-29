@@ -1,47 +1,19 @@
-server:
-  port: 8080
-  tomcat:
-    max-connections: 10000 # 最大连接数
-    threads:
-      max: 800          # 最大工作线程数
-      min-spare: 100    # 最小空闲线程数
-    accept-count: 100   # 等待队列长度
-    connection-timeout: 20000
-
 spring:
-  profiles:
-    active: dev
-    default: dev
-  application:
-    name: spring-security
-  jackson:
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss
-    serialization:
-      write-date-keys-as-timestamps: false
-  servlet:
-    multipart:
-      max-request-size: 10MB
-      max-file-size: 10MB
-      file-size-threshold: 2KB
-      location: /tmp
-      resolve-lazily: false
-  cache:
-    type: caffeine
-    caffeine:
-      spec: maximumSize=10000,expireAfterWrite=600s
-  task:
-    execution:
-      pool:
-        core-size: 8
-        max-size: 16
-        queue-capacity: 100
-        keep-alive: 60s
-      thread-name-prefix: async-task-
-    scheduling:
-      pool:
-        size: 4
-      thread-name-prefix: scheduling-
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+jwt:
+  secret: "your-jwt-secret-key-generate-a-new-one"
+  expire: 3600000 * 24        # 24 小时（毫秒）
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*/*.xml
@@ -51,26 +23,3 @@ mybatis-plus:
     db-config:
       table-prefix:
       id-type: auto
-
-springdoc:
-  packages-to-scan: com.example.demo.controller
-
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
-    enable-footer-custom: true
-    footer-custom-content: "Apache License 2.0 | Copyright xiao he like sleep"
-  basic:
-    enable: true
-    username: 1
-    password: ${DB_PASSWORD}
-
-logging:
-  file:
-    name: app.log
-  logback:
-    rollingpolicy:
-      max-file-size: 100MB
-      max-history: 30
-      total-size-cap: 3GB

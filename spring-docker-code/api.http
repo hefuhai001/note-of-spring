@@ -120,4 +120,4 @@ Content-Type: application/json
 }
 
 ### ==================== 查询任务结果 ====================
-GET http://localhost:8080/api/task/result/055bc7c0-218b-4ee1-90be-a65f2629f22f
+GET http://localhost:8080/api/task/result/5b2ff268-ca59-4ac0-8cb7-27e4bd97c7d5

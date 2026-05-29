@@ -19,9 +19,6 @@ spring:
           max-idle: 10
           min-idle: 0
 
-server:
-  port: 8080
-
 sa-token:
   token-name: sa-token       # 前端携带 token 的 header / param 名称
   timeout: 2592000          # 有效时间(秒)30-day
