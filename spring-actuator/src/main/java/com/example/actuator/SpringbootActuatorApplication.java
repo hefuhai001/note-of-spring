@@ -8,12 +8,7 @@ public class SpringbootActuatorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringbootActuatorApplication.class, args);
-        System.out.println("http://localhost:8000/actuator/prometheus");
-        System.out.println("http://localhost:8000/actuator/health");
-        System.out.println("http://localhost:8080/actuator/info");
-        System.out.println("http://localhost:8000/actuator/beans");
-        System.out.println("http://localhost:8000/actuator/metrics");
-        System.out.println("http://localhost:8000/actuator/env");
+        System.out.println("http://localhost:8000/actuator");
     }
 
 }

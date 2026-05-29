@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: Spring-wxpay
+
+wxpay:
+  appId: your_app_id
+  mchId: your_mch_id
+  mchKey: your_mch_key
+  keyPath: classpath:/cert/apiclient_cert.p12
+  notifyUrl: https://yourdomain.com/notify
