@@ -1,0 +1,8 @@
+name: summarizer
+description: 文本摘要技能，能够对长文本进行精炼总结
+version: 1.0.0
+author: hfh
+category: text-processing
+parameters:
+  summary_length: 摘要长度，如简短、中等、详细
+  focus_area: 关注领域，如技术要点、核心观点、关键数据

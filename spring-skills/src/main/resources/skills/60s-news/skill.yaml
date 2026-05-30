@@ -1,0 +1,11 @@
+name: 60s-news
+description: 每日60秒新闻速览，自动获取最新新闻并由AI整理摘要
+version: 1.0.0
+author: hfh
+category: news
+parameters:
+  format: 输出格式，如简洁列表、详细摘要
+api:
+  url: https://60s.viki.moe/v2/60s
+  method: GET
+  response_key: data

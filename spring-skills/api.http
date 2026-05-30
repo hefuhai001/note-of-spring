@@ -1,0 +1,20 @@
+
+###
+
+POST http://localhost:8080/api/skills/translator/execute
+Content-Type: application/json
+
+{
+  "variables": {
+    "source_language": "中文",
+    "target_language": "英文"
+  },
+  "userInput": "今天天气真好"
+}
+
+###
+
+POST http://localhost:8080/api/skills/60s-news/execute
+Content-Type: application/json
+
+{}

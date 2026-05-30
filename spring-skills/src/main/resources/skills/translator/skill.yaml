@@ -1,0 +1,8 @@
+name: translator
+description: 多语言翻译技能，支持将文本翻译为指定目标语言
+version: 1.0.0
+author: hfh
+category: language
+parameters:
+  source_language: 源语言，如中文、英文等
+  target_language: 目标语言，如英文、日文等

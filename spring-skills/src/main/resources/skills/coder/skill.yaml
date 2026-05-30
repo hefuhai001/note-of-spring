@@ -1,0 +1,8 @@
+name: coder
+description: 代码生成技能，支持多种编程语言的代码生成和解释
+version: 1.0.0
+author: hfh
+category: development
+parameters:
+  language: 编程语言，如Java、Python、JavaScript等
+  framework: 使用的框架，如Spring Boot、React等（可选）
