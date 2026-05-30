@@ -1,4 +1,4 @@
-package com.example.demo.base.mapper;
+package com.example.demo.mapper;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;

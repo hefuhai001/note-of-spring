@@ -1,4 +1,4 @@
-package com.example.demo.base.config;
+package com.example.demo.config;
 
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;

@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.hfh</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>spring-minio-static</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
@@ -34,7 +34,8 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>4.1.0</version>
+            <version>4.1.5</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -57,5 +58,20 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/repository/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
+
 
 </project>
