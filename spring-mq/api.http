@@ -1,0 +1,7 @@
+###
+POST http://localhost:8080/api/message/send
+Content-Type: text/plain
+
+Hello RabbitMQ!
+
+###

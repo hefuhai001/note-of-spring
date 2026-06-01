@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: spring-mq
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: root
+    password: ${DB_PASSWORD}
+    virtual-host: /
+
+mq:
+  exchange:
+    direct: mq.exchange.direct
+  queue:
+    default: mq.queue.default
+  routing:
+    key: mq.routing.key
