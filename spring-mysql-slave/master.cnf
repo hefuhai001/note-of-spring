@@ -1,0 +1,7 @@
+[mysqld]
+server-id=1
+log-bin=mysql-bin
+binlog-format=ROW
+binlog-do-db=master_slave_db
+gtid-mode=ON
+enforce-gtid-consistency=ON

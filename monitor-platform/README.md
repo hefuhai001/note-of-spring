@@ -1,4 +1,4 @@
-# Monitor Platform
+# Spring Boot Actuator
 
 基于 **Spring Boot Actuator + Vue 3** 的应用监控平台，实时展示 JVM、健康状态、业务指标等数据。
 
