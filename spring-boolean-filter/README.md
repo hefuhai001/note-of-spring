@@ -210,7 +210,7 @@ POST /api/order { "orderNo": "ORD-NEW", ... }
 
 ### 参数配置
 
-[`ProductOrderBloomFilter`](src/main/java/com/hfh/api/service/ProductOrderBloomFilter.java) 配置：
+[`ProductOrderBloomFilter`](src/main/java/com/example/api/service/ProductOrderBloomFilter.java) 配置：
 
 | 参数 | 值 | 说明 |
 |------|-----|------|
@@ -221,7 +221,7 @@ Guava 会根据这两个参数自动计算出最优的位数组大小和哈希�
 
 ### Redis 缓存配置
 
-[`ProductOrderService`](src/main/java/com/hfh/api/service/ProductOrderService.java) 配置：
+[`ProductOrderService`](src/main/java/com/example/api/service/ProductOrderService.java) 配置：
 
 | 项目 | 值 |
 |------|-----|

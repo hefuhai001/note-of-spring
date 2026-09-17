@@ -31,7 +31,7 @@
 
 **用途**：Token 生成、签名、解析、过期验证。
 
-**关键用法**（见 [JWTUtils.java](jwt-api/src/main/java/com/example/jwt/utils/JWTUtils.java)）：
+**关键用法**（见 [JWTUtils.java](jwt-api/src/main/java/com/example/hfh/utils/JWTUtils.java)）：
 
 ```java
 // ✅ 生成 Token
@@ -78,7 +78,7 @@ mybatis-plus:
 
 **核心能力**：
 - 内置 `BaseMapper<T>` 泛型 CRUD
-- 分页插件配置见 [MybatisPlusConfig.java](jwt-api/src/main/java/com/example/jwt/config/MybatisPlusConfig.java)
+- 分页插件配置见 [MybatisPlusConfig.java](jwt-api/src/main/java/com/example/hfh/config/MybatisPlusConfig.java)
 - 代码生成器（配合 Freemarker 模板）自动生成 Entity/Mapper/Service/Controller
 
 ---
@@ -95,7 +95,7 @@ mybatis-plus:
 
 **访问地址**：`http://localhost:9090/doc.html`
 
-**配置**（[SwaggerConfig.java](jwt-api/src/main/java/com/example/jwt/config/SwaggerConfig.java)）：
+**配置**（[SwaggerConfig.java](jwt-api/src/main/java/com/example/hfh/config/SwaggerConfig.java)）：
 - 自动扫描所有 `@RestController` 接口
 - 支持中文界面（`language: zh_cn`）
 - 可在 Controller 方法上使用 `@Parameter` / `@Operation` 补充文档说明
@@ -202,10 +202,10 @@ spring-jwt/
 
 | 组件 | 文件 | 作用 |
 |------|------|------|
-| `@JwtToken` 注解 | [JwtToken.java](jwt-api/src/main/java/com/example/jwt/annotation/JwtToken.java) | 标记需要认证的接口方法 |
-| 拦截器 | [JwtInterceptor.java](jwt-api/src/main/java/com/example/jwt/config/JwtInterceptor.java) | 从请求头取 Token → 验证有效性 → 判断是否过期 |
-| 拦截器注册 | [WebConfig.java](jwt-api/src/main/java/com/example/jwt/config/WebConfig.java) | 配置拦截路径（如 `/common/**`） |
-| 工具类 | [JWTUtils.java](jwt-api/src/main/java/com/example/jwt/utils/JWTUtils.java) | 封装 Token 生成和解析逻辑 |
+| `@JwtToken` 注解 | [JwtToken.java](jwt-api/src/main/java/com/example/hfh/annotation/JwtToken.java) | 标记需要认证的接口方法 |
+| 拦截器 | [JwtInterceptor.java](jwt-api/src/main/java/com/example/hfh/config/JwtInterceptor.java) | 从请求头取 Token → 验证有效性 → 判断是否过期 |
+| 拦截器注册 | [WebConfig.java](jwt-api/src/main/java/com/example/hfh/config/WebConfig.java) | 配置拦截路径（如 `/common/**`） |
+| 工具类 | [JWTUtils.java](jwt-api/src/main/java/com/example/hfh/utils/JWTUtils.java) | 封装 Token 生成和解析逻辑 |
 
 **使用方式**：
 
@@ -241,7 +241,7 @@ public class UserController {
 
 ## 统一响应格式
 
-[ApiResponse.java](jwt-api/src/main/java/com/example/jwt/resp/ApiResponse.java) 封装了标准返回结构：
+[ApiResponse.java](jwt-api/src/main/java/com/example/hfh/resp/ApiResponse.java) 封装了标准返回结构：
 
 ```json
 {
@@ -258,7 +258,7 @@ return ApiResponse.failure("参数错误");
 return ApiResponse.failure(ApiResponseCode.UNAUTHORIZED); // 使用预定义错误码
 ```
 
-**全局异常处理**（[GlobalControllerAdvice.java](jwt-api/src/main/java/com/example/jwt/config/GlobalControllerAdvice.java)）：
+**全局异常处理**（[GlobalControllerAdvice.java](jwt-api/src/main/java/com/example/hfh/config/GlobalControllerAdvice.java)）：
 - 捕获所有 `RuntimeException`，统一返回错误格式
 - 前端无需逐个接口处理异常
 

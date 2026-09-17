@@ -23,7 +23,7 @@
 </dependency>
 ```
 
-**注意**：`h2` 的 scope 设为 `runtime` 即可，编译阶段不需要。
+**注意**：`hfh` 的 scope 设为 `runtime` 即可，编译阶段不需要。
 
 ## H2 是什么
 

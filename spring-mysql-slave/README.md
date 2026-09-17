@@ -523,7 +523,7 @@ mvn test -Dtest=UserControllerTest#testCreateUser
 
 ### 测试覆盖范围
 
-[UserControllerTest.java](src/test/java/com/hfh/api/UserControllerTest.java) 包含：
+[UserControllerTest.java](src/test/java/com/example/hfh/UserControllerTest.java) 包含：
 
 | 测试方法 | 验证点 | 预期行为 |
 |---------|--------|---------|

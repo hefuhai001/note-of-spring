@@ -66,7 +66,7 @@ spring:
 
 ### MinIO 客户端动态配置
 
-[MinioConfig.java](src/main/java/com/example/minio/config/MinioConfig.java) - 通过 `@ConfigurationProperties` 绑定配置：
+[MinioConfig.java](src/main/java/com/example/hfh/config/MinioConfig.java) - 通过 `@ConfigurationProperties` 绑定配置：
 
 ```java
 @Configuration
@@ -80,7 +80,7 @@ public class MinioConfig {
 }
 ```
 
-[MinioConfiguration.java](src/main/java/com/example/minio/config/MinioConfiguration.java) - 构建 `MinioClient` Bean：
+[MinioConfiguration.java](src/main/java/com/example/hfh/config/MinioConfiguration.java) - 构建 `MinioClient` Bean：
 
 ```java
 @Bean
@@ -94,7 +94,7 @@ public MinioClient minioClient() {
 
 ### 工具类封装
 
-[MinioUtil.java](src/main/java/com/example/minio/util/MinioUtil.java) 封装了常用操作：
+[MinioUtil.java](src/main/java/com/example/hfh/util/MinioUtil.java) 封装了常用操作：
 
 - **自动创建存储桶**: 上传文件时若存储桶不存在会自动创建
 - **文件夹模拟**: MinIO 本身是扁平结构，通过 `objectName` 以 `/` 结尾来模拟文件夹
@@ -150,7 +150,7 @@ src/main/java/com/example/minio/
 A: MinIO 是对象存储，没有真正的目录树。文件夹通过在 objectName 末尾加 `/` 模拟，删除文件夹需要递归删除所有对象。
 
 **Q: 如何修改文件访问链接的有效期？**
-A: 在 [MinioUtil.java#L89](src/main/java/com/example/minio/util/MinioUtil.java#L89) 的 `getFileUrl()` 方法中修改 `.expiry()` 参数。
+A: 在 [MinioUtil.java#L89](src/main/java/com/example/hfh/util/MinioUtil.java#L89) 的 `getFileUrl()` 方法中修改 `.expiry()` 参数。
 
 **Q: 支持大文件上传吗？**
 A: 当前默认限制 30MB，可在 `application.yml` 中调整 `max-file-size`。如需分片上传需自行实现。

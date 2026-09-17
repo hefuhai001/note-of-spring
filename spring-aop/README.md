@@ -17,7 +17,7 @@ Spring Boot 2.x/3.x 的 `spring-boot-starter-web` 已内置 AspectJ，无需额�
 
 ### 1. 自定义注解
 
-[Log.java](src/main/java/com/example/aop/utils/Log.java)
+[Log.java](src/main/java/com/example/hfh/utils/Log.java)
 
 ```java
 @Target(ElementType.METHOD)
@@ -33,7 +33,7 @@ public @interface Log {
 
 ### 2. 切面定义
 
-[LogAspect.java](src/main/java/com/example/aop/utils/LogAspect.java)
+[LogAspect.java](src/main/java/com/example/hfh/utils/LogAspect.java)
 
 ```java
 @Aspect
@@ -41,7 +41,7 @@ public @interface Log {
 public class LogAspect {
 
     // 切点：匹配所有带 @Log 注解的方法
-    @Pointcut("@annotation(com.example.aop.utils.Log)")
+    @Pointcut("@annotation(com.example.hfh.utils.Log)")
     public void logPointCut() {}
 
     // 环绕通知：在方法执行前后插入逻辑
@@ -83,7 +83,7 @@ public class LogAspect {
 
 ### 3. 使用方式
 
-[UserController.java](src/main/java/com/example/aop/controller/UserController.java)
+[UserController.java](src/main/java/com/example/hfh/controller/UserController.java)
 
 ```java
 @RestController
@@ -119,10 +119,10 @@ public class UserController {
 
 ```
 // 匹配特定注解（本例用法）
-@annotation(com.example.aop.utils.Log)
+@annotation(com.example.hfh.utils.Log)
 
 // 匹配某个包下所有方法
-execution(* com.example.aop.controller.*.*(..))
+execution(* com.example.hfh.controller.*.*(..))
 
 // 匹配返回值、类名、方法名、参数
 execution(public * com.example..*Service.find*(String, ..))
@@ -142,7 +142,7 @@ within(com.example.controller.*) || within(com.example.service.*)
 
 ## 数据库设计
 
-[SysOperLog.java](src/main/java/com/example/aop/entity/SysOperLog.java) → [db_aop.sql](sql/db_aop.sql)
+[SysOperLog.java](src/main/java/com/example/hfh/entity/SysOperLog.java) → [db_aop.sql](sql/db_aop.sql)
 
 ```sql
 CREATE TABLE sys_oper_log (

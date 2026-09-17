@@ -34,7 +34,7 @@ public CompletableFuture<Void> sendSimpleEmailAsync(EmailRequest request) {
 }
 ```
 
-线程池配置见 [AsyncConfig.java](src/main/java/com/hfh/config/AsyncConfig.java)。
+线程池配置见 [AsyncConfig.java](src/main/java/com/example/hfh/config/AsyncConfig.java)。
 
 ### 3. 收件人校验（自定义 Validation 注解）
 
@@ -52,7 +52,7 @@ public class EmailRequest implements Recipient {
 - `@AtLeastOneRecipient`：`to` 和 `toList` 至少填一个
 - `@ValidEmailList`：列表中每个邮箱格式校验
 
-详见 [validation 包](src/main/java/com/hfh/validation/)。
+详见 [validation 包](src/main/java/com/example/hfh/validation/)。
 
 ## 快速开始
 

@@ -235,7 +235,7 @@ mybatis-plus:
 ## Task 5: 创建实体类
 
 **Files:**
-- Create: `src/main/java/com/hfh/api/entity/User.java`
+- Create: `../../../src/main/java/com/example/hfh/entity/User.java`
 
 **目标:** 创建 User 实体类，映射到 user 表
 
@@ -276,7 +276,7 @@ public class User {
 ## Task 6: 创建 Mapper 接口
 
 **Files:**
-- Create: `src/main/java/com/hfh/api/mapper/UserMapper.java`
+- Create: `../../../src/main/java/com/example/hfh/mapper/UserMapper.java`
 
 **目标:** 继承 BaseMapper 提供 CRUD 操作
 
@@ -286,7 +286,7 @@ public class User {
 package com.hfh.api.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hfh.api.entity.User;
+import entity.com.example.hfh.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -301,8 +301,8 @@ public interface UserMapper extends BaseMapper<User> {
 ## Task 7: 创建 Service 层
 
 **Files:**
-- Create: `src/main/java/com/hfh/api/service/UserService.java`
-- Create: `src/main/java/com/hfh/api/service/UserServiceImpl.java`
+- Create: `../../../src/main/java/com/example/hfh/service/UserService.java`
+- Create: `../../../src/main/java/com/example/hfh/service/UserServiceImpl.java`
 
 **目标:** 实现业务逻辑层
 
@@ -312,7 +312,7 @@ public interface UserMapper extends BaseMapper<User> {
 package com.hfh.api.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.hfh.api.entity.User;
+import entity.com.example.hfh.User;
 
 public interface UserService extends IService<User> {
 }
@@ -324,8 +324,9 @@ public interface UserService extends IService<User> {
 package com.hfh.api.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hfh.api.entity.User;
-import com.hfh.api.mapper.UserMapper;
+import entity.com.example.hfh.User;
+import mapper.com.example.hfh.UserMapper;
+import com.example.hfh.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -340,7 +341,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 ## Task 8: 创建 Controller 层
 
 **Files:**
-- Create: `src/main/java/com/hfh/api/controller/UserController.java`
+- Create: `../../../src/main/java/com/example/hfh/controller/UserController.java`
 
 **目标:** 提供 REST API 接口用于 CRUD 操作和测试读写分离
 
@@ -350,8 +351,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 package com.hfh.api.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.hfh.api.entity.User;
-import com.hfh.api.service.UserService;
+import entity.com.example.hfh.User;
+import service.com.example.hfh.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -401,7 +402,7 @@ public class UserController {
 ## Task 9: 创建集成测试
 
 **Files:**
-- Create: `src/test/java/com/hfh/api/UserControllerTest.java`
+- Create: `../../../src/test/java/com/example/hfh/UserControllerTest.java`
 
 **目标:** 测试 CRUD 操作并验证读写分离效果
 
@@ -410,8 +411,8 @@ public class UserController {
 ```java
 package com.hfh.api;
 
-import com.hfh.api.entity.User;
-import com.hfh.api.mapper.UserMapper;
+import entity.com.example.hfh.User;
+import mapper.com.example.hfh.UserMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

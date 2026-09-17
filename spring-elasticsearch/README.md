@@ -113,7 +113,7 @@ logging:
 创建 `Book.java`，使用注解映射 Elasticsearch 文档：
 
 ```java
-package com.example.es.entity;
+package com.example.hfh.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -127,28 +127,28 @@ import java.util.Date;
 @Data
 @Document(indexName = "books", shards = 3, replicas = 1)
 public class Book {
-    
+
     @Id
     private String id;
-    
+
     @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String title;
-    
+
     @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String author;
-    
+
     @Field(type = FieldType.Keyword)
     private String category;
-    
+
     @Field(type = FieldType.Double)
     private BigDecimal price;
-    
+
     @Field(type = FieldType.Integer)
     private Integer stock;
-    
+
     @Field(type = FieldType.Date, format = {}, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishDate;
-    
+
     @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String description;
 }
@@ -164,9 +164,9 @@ public class Book {
 创建 `BookRepository.java`，继承 `ElasticsearchRepository`：
 
 ```java
-package com.example.es.repository;
+package com.example.hfh.repository;
 
-import com.example.es.entity.Book;
+import com.example.hfh.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.annotations.Query;
@@ -177,19 +177,19 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends ElasticsearchRepository<Book, String> {
-    
+
     // 根据作者精确查询
     List<Book> findByAuthor(String author);
-    
+
     // 根据价格范围查询
     List<Book> findByPriceBetween(BigDecimal min, BigDecimal max);
-    
+
     // 标题模糊匹配（全文检索）
     Page<Book> findByTitleContaining(String keyword, Pageable pageable);
-    
+
     // 多字段组合查询
     Page<Book> findByTitleContainingOrAuthorContaining(String titleKeyword, String authorKeyword, Pageable pageable);
-    
+
     // 使用自定义 DSL 查询（价格大于某值且标题匹配）
     @Query("{\"bool\": {\"must\": [{\"match\": {\"title\": \"?0\"}}, {\"range\": {\"price\": {\"gt\": \"?1\"}}}]}}")
     Page<Book> searchByTitleAndPriceGt(String title, BigDecimal minPrice, Pageable pageable);
@@ -206,10 +206,10 @@ public interface BookRepository extends ElasticsearchRepository<Book, String> {
 创建 `BookService.java` 实现业务逻辑：
 
 ```java
-package com.example.es.service;
+package com.example.hfh.service;
 
-import com.example.es.entity.Book;
-import com.example.es.repository.BookRepository;
+import com.example.hfh.entity.Book;
+import com.example.hfh.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -231,31 +231,31 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BookService {
-    
+
     private final BookRepository bookRepository;
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
-    
+
     /**
      * 保存单本书籍
      */
     public Book save(Book book) {
         return bookRepository.save(book);
     }
-    
+
     /**
      * 批量保存
      */
     public Iterable<Book> saveAll(List<Book> books) {
         return bookRepository.saveAll(books);
     }
-    
+
     /**
      * 根据 ID 查询
      */
     public Optional<Book> findById(String id) {
         return bookRepository.findById(id);
     }
-    
+
     /**
      * 查询所有（分页）
      */
@@ -263,14 +263,14 @@ public class BookService {
         Pageable pageable = PageRequest.of(page, size, Sort.by("publishDate").descending());
         return bookRepository.findAll(pageable);
     }
-    
+
     /**
      * 根据 ID 删除
      */
     public void deleteById(String id) {
         bookRepository.deleteById(id);
     }
-    
+
     /**
      * 全文检索（标题或作者）
      */
@@ -278,23 +278,23 @@ public class BookService {
         Pageable pageable = PageRequest.of(page, size);
         return bookRepository.findByTitleContainingOrAuthorContaining(keyword, keyword, pageable);
     }
-    
+
     /**
      * 复杂条件查询（使用 NativeSearchQueryBuilder）
      */
     public List<Book> complexSearch(String keyword, String category, BigDecimal minPrice, BigDecimal maxPrice) {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-        
+
         // 标题匹配
         if (keyword != null && !keyword.isEmpty()) {
             boolQuery.must(QueryBuilders.matchQuery("title", keyword));
         }
-        
+
         // 分类精确匹配
         if (category != null && !category.isEmpty()) {
             boolQuery.must(QueryBuilders.termQuery("category", category));
         }
-        
+
         // 价格范围
         if (minPrice != null) {
             boolQuery.must(QueryBuilders.rangeQuery("price").gte(minPrice));
@@ -302,13 +302,13 @@ public class BookService {
         if (maxPrice != null) {
             boolQuery.must(QueryBuilders.rangeQuery("price").lte(maxPrice));
         }
-        
+
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder()
                 .withQuery(boolQuery)
                 .withSort(Sort.by("publishDate").descending());
-        
+
         SearchHits<Book> searchHits = elasticsearchRestTemplate.search(queryBuilder.build(), Book.class);
-        
+
         return searchHits.getSearchHits().stream()
                 .map(SearchHit::getContent)
                 .collect(Collectors.toList());
@@ -321,10 +321,10 @@ public class BookService {
 创建 `BookController.java` 暴露 REST API：
 
 ```java
-package com.example.es.controller;
+package com.example.hfh.controller;
 
-import com.example.es.entity.Book;
-import com.example.es.service.BookService;
+import com.example.hfh.entity.Book;
+import com.example.hfh.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -338,32 +338,32 @@ import java.util.Optional;
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
-    
+
     private final BookService bookService;
-    
+
     @PostMapping
     public ResponseEntity<Book> create(@RequestBody Book book) {
         return ResponseEntity.ok(bookService.save(book));
     }
-    
+
     @PostMapping("/batch")
     public ResponseEntity<Iterable<Book>> createBatch(@RequestBody List<Book> books) {
         return ResponseEntity.ok(bookService.saveAll(books));
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Book> getById(@PathVariable String id) {
         Optional<Book> book = bookService.findById(id);
         return book.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
-    
+
     @GetMapping
     public ResponseEntity<Page<Book>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(bookService.findAll(page, size));
     }
-    
+
     @GetMapping("/search")
     public ResponseEntity<Page<Book>> search(
             @RequestParam String keyword,
@@ -371,7 +371,7 @@ public class BookController {
             @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(bookService.search(keyword, page, size));
     }
-    
+
     @GetMapping("/complex-search")
     public ResponseEntity<List<Book>> complexSearch(
             @RequestParam(required = false) String keyword,
@@ -380,7 +380,7 @@ public class BookController {
             @RequestParam(required = false) BigDecimal maxPrice) {
         return ResponseEntity.ok(bookService.complexSearch(keyword, category, minPrice, maxPrice));
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         bookService.deleteById(id);
@@ -394,7 +394,7 @@ public class BookController {
 如果需要自定义客户端配置，创建 `ElasticsearchConfig.java`：
 
 ```java
-package com.example.es.config;
+package com.example.hfh.config;
 
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -406,10 +406,10 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 
 @Configuration
 public class ElasticsearchConfig extends AbstractElasticsearchConfiguration {
-    
+
     @Value("${spring.elasticsearch.rest.uris}")
     private String elasticsearchUrl;
-    
+
     @Override
     @Bean
     public RestHighLevelClient elasticsearchClient() {

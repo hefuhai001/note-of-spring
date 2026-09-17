@@ -38,9 +38,9 @@ Spring LLM Skills 做了一件事：**把你的 Java 方法注册成 LLM 可调�
 
 | 组件 | 职责 |
 |------|------|
-| [`Skill`](src/main/java/com/example/llm/skills/Skill.java) | 接口，定义一个工具的「名字+描述+参数+执行逻辑」 |
-| [`SkillRegistry`](src/main/java/com/example/llm/skills/SkillRegistry.java) | 注册中心，管理所有 Skill 实例 |
-| [`SkillService`](src/main/java/com/example/llm/service/SkillService.java) | 编排层，处理 LLM 的 Tool Calling 循环（递归，最多5层防死循环） |
+| [`Skill`](src/main/java/com/example/hfh/skills/Skill.java) | 接口，定义一个工具的「名字+描述+参数+执行逻辑」 |
+| [`SkillRegistry`](src/main/java/com/example/hfh/skills/SkillRegistry.java) | 注册中心，管理所有 Skill 实例 |
+| [`SkillService`](src/main/java/com/example/hfh/service/SkillService.java) | 编排层，处理 LLM 的 Tool Calling 循环（递归，最多5层防死循环） |
 
 ## 快速上手
 
@@ -72,7 +72,7 @@ llm:
 
 ### 3. 写一个 Skill
 
-实现 [`Skill`](src/main/java/com/example/llm/skills/Skill.java) 接口，打上 `@Component`：
+实现 [`Skill`](src/main/java/com/example/hfh/skills/Skill.java) 接口，打上 `@Component`：
 
 ```java
 @Component
@@ -113,7 +113,7 @@ public class CalculatorSkill implements Skill {
 }
 ```
 
-就这三步，启动应用，Skill 会通过 [`SkillAutoConfiguration`](src/main/java/com/example/llm/config/SkillAutoConfiguration.java) 自动注册到 Registry。
+就这三步，启动应用，Skill 会通过 [`SkillAutoConfiguration`](src/main/java/com/example/hfh/config/SkillAutoConfiguration.java) 自动注册到 Registry。
 
 ### 4. 调用
 
@@ -135,7 +135,7 @@ GET /api/skills
 
 ### Tool Calling 循环机制
 
-[`SkillService.processWithSkills()`](src/main/java/com/example/llm/service/SkillService.java#L35-L37) 是整个框架的核心：
+[`SkillService.processWithSkills()`](src/main/java/com/example/hfh/service/SkillService.java#L35-L37) 是整个框架的核心：
 
 1. 把用户消息 + 所有 Skill 定义发给 LLM
 2. 如果 LLM 返回了 `tool_call`，执行对应的 Skill
@@ -158,7 +158,7 @@ callWithToolLoop(messages, depth):
 
 ### 为什么用 WebFlux
 
-[`LlmService`](src/main/java/com/example/llm/service/LlmService.java) 基于 `WebClient`（非阻塞 HTTP 客户端），返回 `Mono<ChatResponse>`。原因很简单——**等 LLM 响应可能要好几秒**，阻塞线程纯属浪费。Skill 执行也被扔到了 `boundedElastic` 调度器上，不阻塞事件循环。
+[`LlmService`](src/main/java/com/example/hfh/service/LlmService.java) 基于 `WebClient`（非阻塞 HTTP 客户端），返回 `Mono<ChatResponse>`。原因很简单——**等 LLM 响应可能要好几秒**，阻塞线程纯属浪费。Skill 执行也被扔到了 `boundedElastic` 调度器上，不阻塞事件循环。
 
 ### 多 Provider 支持
 
@@ -168,9 +168,9 @@ callWithToolLoop(messages, depth):
 
 | Skill | 功能 | 触发场景 |
 |-------|------|----------|
-| [`CalculatorSkill`](src/main/java/com/example/llm/skills/impl/CalculatorSkill.java) | 数学计算 | 「帮我算一下...」 |
-| [`WeatherSkill`](src/main/java/com/example/llm/skills/impl/WeatherSkill.java) | 天气查询 | 「今天天气怎么样」 |
-| [`TranslateSkill`](src/main/java/com/example/llm/skills/impl/TranslateSkill.java) | 翻译 | 「翻译成英文」 |
+| [`CalculatorSkill`](src/main/java/com/example/hfh/skills/impl/CalculatorSkill.java) | 数学计算 | 「帮我算一下...」 |
+| [`WeatherSkill`](src/main/java/com/example/hfh/skills/impl/WeatherSkill.java) | 天气查询 | 「今天天气怎么样」 |
+| [`TranslateSkill`](src/main/java/com/example/hfh/skills/impl/TranslateSkill.java) | 翻译 | 「翻译成英文」 |
 
 这些只是演示，生产环境替换成真实的业务逻辑即可（接数据库、调外部 API、读写文件……随你）。
 

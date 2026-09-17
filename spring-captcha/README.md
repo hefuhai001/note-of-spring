@@ -161,7 +161,7 @@ String code = VerifyCodeUtils.generateVerify(1, "+-*");
 
 ### 3. 调整复杂度
 
-修改 [VerifyCodeUtils.java](src/main/java/com/example/captcha/utils/VerifyCodeUtils.java)：
+修改 [VerifyCodeUtils.java](src/main/java/com/example/hfh/utils/VerifyCodeUtils.java)：
 - 干扰线数量：第155行 `i < 20`
 - 噪点率：第162行 `yawpRate = 0.05f`
 - 扭曲强度：第175行 `Math.PI / 4`
